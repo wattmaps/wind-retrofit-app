@@ -1,11 +1,16 @@
 # user interface ----
 ui <- navbarPage(
   
+  # adding css sytle file ----
+  header = tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "sass_styles.css")
+  ),
+  
 ### --------------------
 ### START Navbar Page ----
 ### -------------------- 
     
-    title = "Wind Retrofit App",
+    title = "Co-Locate App",
     
 ### --------------------
 ### Page 1 Home --------

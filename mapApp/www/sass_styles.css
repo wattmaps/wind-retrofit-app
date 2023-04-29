@@ -1,0 +1,24 @@
+body {
+  background-color: #8ca376;
+  color: #525cd1;
+}
+
+h2 {
+  letter-spacing: 5px;
+}
+
+h4 {
+  color: #f1f7eb;
+}
+
+a {
+  color: #E59C5E;
+}
+
+.navbar-default {
+  background-color: #f1f7eb;
+}
+
+.btn.default.active {
+  background-color: #f0eaa5;
+}
