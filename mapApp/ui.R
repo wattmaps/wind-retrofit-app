@@ -148,25 +148,55 @@ ui <- navbarPage(
                  # START row 1 - column 1 graph1
                  column(6,
                         
-                        # INSERT VIZ
-                        "Graph 1"
+                        # START tabsetPanel graph 1 ----
+                        tabsetPanel(
+                          
+                          # start graph 1 tabPanel ----
+                          tabPanel(title = "Graph 1",
+                                   
+                                   "findings data viz here"  
+                                   
+                          ), # end tabsetPanel graph 1
+                          
+                          # start tabsetPanel graph 2 ----
+                          tabPanel(title = "Graph 2",
+                                   
+                                   "findings data viz 2 here"  
+                                   
+                          ) # end tabsetPanel graph 2
+                          
+                        ) # END tabsetPanel
                         
-                 ),
-                 # ENDS row 1 - column 1 - graph1
+                 ), # END (Page 2) data viz tabPanel
                  
-                 # START row 1 - column 2 - graph2
                  column(6, 
                         
-                        #INSERT VIZ
-                        "Graph 2"
+                        # START tabsetPanel graph 1 ----
+                        tabsetPanel(
+                          
+                          # start graph 1 tabPanel ----
+                          tabPanel(title = "Graph 1",
+                                   
+                                   "findings viz 1 here"  
+                                   
+                          ), # end tabsetPanel graph 1
+                          
+                          # start tabsetPanel graph 2 ----
+                          tabPanel(title = "Graph 2",
+                                   
+                                   "findings viz 2 here"  
+                                   
+                          ) # end tabsetPanel graph 2
+                          
+                        ) # END tabsetPanel
                         
                  ),
                  # END row 1 - column 2 - graph2
+                        
+                 ),
+                 # ENDS ROW 1
                  
                  
-               ),
-               # END row 1
-               
                # START row 2 - Map text 
                fluidRow(
                  
@@ -185,15 +215,21 @@ ui <- navbarPage(
                  
                  # START row 2 - column 3 padding
                  column(1,
+                        
                  ),
                  # ENDS row 2 - column 1 - padding
                  
+                 
                )
                # END row 2 - map text 
+                 
+               ),
+               # END fluid page
                
-             ) # END fluid page - maps
+               
+             ) # END (Page 4) tabular data 
              
-    ) # END (Page 4) tabular data tabsetPanel
+     
     
 ### --------------------
 ### END Navbar Page ----
