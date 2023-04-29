@@ -1,9 +1,17 @@
 # user interface ----
 ui <- navbarPage(
+  
+### --------------------
+### START Navbar Page ----
+### -------------------- 
     
     title = "Wind Retrofit App",
     
-    # (Page 1) home tabPanel ----
+### --------------------
+### Page 1 Home --------
+### --------------------
+    
+    # (Page 1) home tabPanel
     tabPanel(title = "Home",
              
              "lots of text" 
@@ -11,7 +19,11 @@ ui <- navbarPage(
              
     ), # END (Page 1) home tabPanel
     
-    # (Page 2) about tabPanel ----
+### --------------------
+### Page 2 About App ---
+### --------------------
+    
+    # (Page 2) about tabPanel
     tabPanel(title = "How to Use the App",
              # START fluid page - about
              fluidPage( 
@@ -62,7 +74,11 @@ ui <- navbarPage(
              
     ), # END (Page 2) about tabPanel
     
-    # (Page 2) data viz tabPanel ----
+### --------------------
+### Page 3 Map ---------
+### --------------------
+    
+    # (Page 3) data viz tabPanel
     tabPanel(title =  "Explore the Map",
              
              # START fluid page - map
@@ -117,7 +133,11 @@ ui <- navbarPage(
              
     ), # END (Page 2) data viz tabsetPanel
     
-    # (Page 2) tabular data tabPanel ----
+### --------------------
+### Page 4 Data ---------
+### --------------------
+    
+    # (Page 4) tabular data tabPanel
     tabPanel(title =  "Explore the Data",
              
              # START fluid page - data
@@ -173,7 +193,11 @@ ui <- navbarPage(
                
              ) # END fluid page - maps
              
-    ) # END (Page 2) tabular data tabsetPanel
+    ) # END (Page 4) tabular data tabsetPanel
+    
+### --------------------
+### END Navbar Page ----
+### --------------------  
     
   ) # END navbarPage
   
