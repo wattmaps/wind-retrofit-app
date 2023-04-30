@@ -1,25 +1,31 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@900&family=Montserrat&display=swap");
 body {
-  background-color: #8ca376;
-  color: #525cd1;
+  background-color: #2a9d8f;
+  color: #e76f51;
 }
 
 h2 {
   letter-spacing: 5px;
+  font-family: "Lato", sans-serif;
 }
 
 h4 {
-  color: #f1f7eb;
+  color: #264653;
+  font-family: "Lato", sans-serif;
+}
+
+p {
+  font-family: "Montserrat", sans-serif;
 }
 
 a {
-  color: #E59C5E;
+  color: #f4a261;
 }
 
 .navbar-default {
-  background-color: #f1f7eb;
+  background-color: #264653;
 }
 
 .btn.default.active {
-  background-color: #f0eaa5;
+  background-color: #e9c46a;
 }

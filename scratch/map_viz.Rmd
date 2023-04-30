@@ -1,0 +1,85 @@
+
+
+```{r}
+
+library(sf)
+library(tmap)
+library(leaflet)
+library(tidyverse)
+library(ggplot2)
+library(lubridate)
+library(htmltools)
+
+### ------
+# test graph
+### ------
+
+energy_gen <- read_csv("mapApp/data/us_WID_latlon_2014.csv")
+
+# setting the start time
+origin <- offset <- as.POSIXct("2014-01-01 00:00") +
+  as.difftime(min(WID_1_dat$hour), unit = "hours")
+
+# data cleaning and grouping
+WID_1_dat <- energy_gen |> 
+  filter(WID == 1) |> 
+  select(-c(WID, lon, lat, CF_status)) |> 
+  pivot_longer(everything()) |> 
+  rename("hour" = name,
+         "gen" = value) |> 
+  separate(hour, c("prefix", "hour"), sep = "_\\D*") |> 
+  select(-prefix) |> 
+  mutate(hour = as.numeric(hour)) |> 
+  mutate(datetime = as.POSIXct(hour*3600, origin = origin)) |> # changing time into a datetime 
+  mutate(month = as.numeric(format(datetime, "%m"))) |> 
+  group_by(month) |> 
+  summarize(monthly_gen = sum(gen))
+
+  
+# creating a WID_1_plot
+WID_1_plot <- ggplot(data = WID_1_dat, 
+                     aes(x = month, y =  monthly_gen)) +
+  geom_area(col = "#2a9d8f",
+            fill = "#2a9d8f") +
+  theme_minimal() +
+  labs(x = "Month",
+       y = "Total Energy Generation (kWh)",
+       title = "Estimated Annual Electricity Profile")
+  
+# Save WID_1_plot as PNG
+ggsave("mapApp/www/images/plots/WID_1_plot.png", WID_1_plot)
+
+# reading in the shapefile
+path = "/Users/colleenmccamy/Documents/MEDS/Capstone/data/exisitingWindContUS/"
+
+map_dat <- st_read(paste0(path, "existing_wind_contiguous_us.shp"))
+
+# only getting 20 to map for testing
+map_dat_test <- head(map_dat, 20)
+
+# loading in the map icon
+map_icon <- makeIcon(iconUrl = "mapApp/www/images/map_icon.png")
+
+# pop-up content
+popup_content <- paste("<b>Location:</b> ",
+                       map_dat_test$t_county,
+                       ", ",
+                       map_dat_test$t_state, 
+                       "<br>",
+                       "<b>Project Name:</b> ",
+                       map_dat_test$p_name, 
+                       "<br>",
+                       "<img src='/Users/colleenmccamy/Documents/MEDS/Capstone/code/wind-retrofit-app/mapApp/www/images/plots/WID_1_plot.png' width='400'>")
+
+# mapping the data with leaflet
+test_map <- leaflet() |> 
+  addTiles() |> 
+  addMarkers(map_dat_test, 
+             lng = map_dat_test$xlong, 
+             lat = map_dat_test$ylat,
+             #icon = map_icon,
+             popup = popup_content)
+
+
+```
+

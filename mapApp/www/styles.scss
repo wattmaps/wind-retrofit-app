@@ -3,14 +3,15 @@
 
 // fonts
 $font-family: 'Lato', sans-serif;
-$font-family: 'Montserrat', sans-serif;
+$font-family-body: 'Montserrat', sans-serif;
 
 // colors
-$teal: #8ca376;
-$d-orange: #525cd1; 
-$l-orange: #E59C5E;
-$yellow: #f0eaa5;
-$navy: #f1f7eb;
+$teal: #2a9d8f;
+$d-orange: #e76f51; 
+$l-orange: #f4a261;
+$yellow: #e9c46a;
+$navy: #264653;
+$white: #F5F9FA;
 
 // element selectors
 
@@ -21,16 +22,16 @@ body {
 
 h2 {
   letter-spacing: 5px;
-  //font-family: $font-family-serif;
+  font-family: $font-family;
 }
 
 h4 {
   color: $navy;
-  //font-family: $font-family-serif;
+  font-family: $font-family;
 }
 
 p {
-  //font-family: $font-family-sans-serif;
+  font-family: $font-family-body;
 }
 
 a {
