@@ -14,7 +14,7 @@ popup_content <- paste("<b>Location:</b> ",
                        "<b>Project Name:</b> ",
                        map_dat_test$p_name, 
                        "<br>",
-                       "<img src='www/images/plots/WID_1_plot.png' width='400'>")
+                       "<img src='images/plots/WID_1_plot.png' width='200'>")
 
 # mapping the data with leaflet
 test_map <- leaflet() |> 

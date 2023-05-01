@@ -277,8 +277,9 @@ ui <- fluidPage(
                  # START row 2 - column 2 - map text
                  column(10, 
                         
-                        #REPLACE
-                        leafletOutput(outputId = "test_map")
+                        # adding the leaflet output
+                        leafletOutput(outputId = "test_map", 
+                                      height = "560px")
                  ),
                  # END row 2 - column 2 - map text
                  
