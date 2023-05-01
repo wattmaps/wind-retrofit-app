@@ -16,12 +16,12 @@ $white: #F5F9FA;
 // element selectors
 
 body {
-  background-color: $teal; 
-  color: $d-orange; 
+  background-color: $white; 
+  color: $navy; 
 }
 
 h2 {
-  letter-spacing: 5px;
+  letter-spacing: 4px;
   font-family: $font-family;
 }
 
@@ -31,6 +31,7 @@ h4 {
 }
 
 p {
+  color: $navy;
   font-family: $font-family-body;
 }
 
@@ -38,12 +39,33 @@ a {
   color: $l-orange;
 }
 
-// class selectors
+// nav bar
 
 .navbar-default {
   background-color: $navy;
 }
 
+.navbar-default .navbar-nav>li>a {
+  color: $white;
+}
+
+.navbar-default .navbar-nav>li.active>a {
+  color: $l-orange;
+   background-color: transparent;
+}
+
+// centering nav bar buttons
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+// nav bar hover text color
+.navbar-default .navbar-nav>li>a:hover {
+  color: $l-orange;
+}
+
 .btn.default.active {
   background-color: $yellow;
 }
+

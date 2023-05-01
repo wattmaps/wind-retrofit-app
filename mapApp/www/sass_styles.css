@@ -1,11 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@900&family=Montserrat&display=swap");
 body {
-  background-color: #2a9d8f;
-  color: #e76f51;
+  background-color: #F5F9FA;
+  color: #264653;
 }
 
 h2 {
-  letter-spacing: 5px;
+  letter-spacing: 4px;
   font-family: "Lato", sans-serif;
 }
 
@@ -15,6 +15,7 @@ h4 {
 }
 
 p {
+  color: #264653;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -24,6 +25,24 @@ a {
 
 .navbar-default {
   background-color: #264653;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: #F5F9FA;
+}
+
+.navbar-default .navbar-nav > li.active > a {
+  color: #f4a261;
+  background-color: transparent;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+  color: #f4a261;
 }
 
 .btn.default.active {

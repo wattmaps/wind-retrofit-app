@@ -14,7 +14,7 @@ library(htmltools)
 # test graph
 ### ------
 
-energy_gen <- read_csv("mapApp/data/us_WID_latlon_2014.csv")
+energy_gen <- read_csv("/Users/colleenmccamy/Documents/MEDS/Capstone/data/us_WID_latlon_2014.csv")
 
 # setting the start time
 origin <- offset <- as.POSIXct("2014-01-01 00:00") +
@@ -33,7 +33,8 @@ WID_1_dat <- energy_gen |>
   mutate(datetime = as.POSIXct(hour*3600, origin = origin)) |> # changing time into a datetime 
   mutate(month = as.numeric(format(datetime, "%m"))) |> 
   group_by(month) |> 
-  summarize(monthly_gen = sum(gen))
+  summarize(monthly_gen = sum(gen)) |> 
+  write.csv(file = "/Users/colleenmccamy/Documents/MEDS/Capstone/code/wind-retrofit-app/mapApp/data/WID1_dat_clean.csv")
 
   
 # creating a WID_1_plot
@@ -73,13 +74,12 @@ popup_content <- paste("<b>Location:</b> ",
 
 # mapping the data with leaflet
 test_map <- leaflet() |> 
-  addTiles() |> 
+  addProviderTiles(providers$NASAGIBS.ModisTerraBands367CR) |> #NASAGIBS.ViirsEarthAtNight2012
   addMarkers(map_dat_test, 
              lng = map_dat_test$xlong, 
              lat = map_dat_test$ylat,
              #icon = map_icon,
              popup = popup_content)
-
 
 ```
 
