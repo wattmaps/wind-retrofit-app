@@ -56,7 +56,9 @@ path = "/Users/colleenmccamy/Documents/MEDS/Capstone/data/exisitingWindContUS/"
 map_dat <- st_read(paste0(path, "existing_wind_contiguous_us.shp"))
 
 # only getting 20 to map for testing
-map_dat_test <- head(map_dat, 20)
+map_dat_test <- head(map_dat, 20) |> 
+  select(c(t_state, t_county, p_name, xlong, ylat)) |> 
+  write_csv(file = "/Users/colleenmccamy/Documents/MEDS/Capstone/code/wind-retrofit-app/mapApp/data/map_test_data_clean.csv")
 
 # loading in the map icon
 map_icon <- makeIcon(iconUrl = "mapApp/www/images/map_icon.png")
