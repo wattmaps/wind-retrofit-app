@@ -11,7 +11,7 @@ ui <- fluidPage(
   fluidRow(
     column(
       width = 12,
-      h2("Wind Co-location Retrofitting", 
+      h2("Co-Locating a Power Couple", 
          align = "center")
     )
   ), 
