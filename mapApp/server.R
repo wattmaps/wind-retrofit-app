@@ -49,6 +49,34 @@ server <- function(input, output) {
                  popup = popup_content)
   })
   
+  ### -------------
+  # Tabular Data
+  # ---------------
+  
+  # Reactive value for selected dataset ----
+  datasetInput <- reactive({
+    switch(input$dataset,
+           "map data" = map_data,
+           "graph data" = map_dat)
+  })
+  
+  # Table of selected dataset ----
+  output$table <- renderTable({
+    datasetInput()
+  })
+  
+  
+  # Downloadable csv of selected dataset ----
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste(input$dataset, ".csv", sep = "")
+    },
+    content = function(file) {
+      write.csv(datasetInput(), file, row.names = FALSE)
+    }
+  )
+  
+  
   # automatically stopping the app when browser is closed
   #session$onSessionEnded(stopApp)
 }

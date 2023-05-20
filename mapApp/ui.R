@@ -359,19 +359,31 @@ ui <- fluidPage(
                  ),
                  # ENDS row 1 - column 1 - padding
                  
-                 # START row 1 - column 2 - map text
-                 column(10, 
+                 # START row 1 - column 4 - download button
+                 column(2, 
+                        selectInput("dataset", "Choose a dataset:",
+                                    choices = c("map data", "graph data")),
+                        
+                        # Button
+                        downloadButton("downloadData", "Download")
+                 ),
+                 # END row 1  - column 4 - download button
+                 
+                 
+                 # START row 1 - column 5 - data table
+                 column(8, 
                         
                         #INSET TABLE
-                        "Table"
+                        tableOutput("table")
                  ),
-                 # END row 1  - column 2 - map text
+                 # END row 1  - column 5 - data table
                  
-                 # START row 1 - column 3 padding
+                 
+                 # START row 1 - column 4 padding
                  column(1,
                         
                  ),
-                 # ENDS row 1 - column 1 - padding
+                 # ENDS row 1 - column 4 - padding
                  
                  
                )
