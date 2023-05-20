@@ -298,8 +298,8 @@ ui <- fluidPage(
                  
                  column(1), # column 1 - left padding
                  
-                 # START row 3 - column 2 - map text
-                 column(10, 
+                 # START row 3 - column 2 - select states
+                 column(5, 
                         
                         # state picker
                         
@@ -314,7 +314,23 @@ ui <- fluidPage(
                                                   multiple = TRUE
                         ) # end state picker
                  ),
-                 # END row 3 - column 2 - map text
+                 # END row 3 - column 2 - select states
+                 
+                 # START row 3 - column 2 - slider
+                 column(5, 
+                        
+                        # start solar cap. slider
+                        
+                        paste("Filter By Solar Capacity"),
+                        
+                        sliderInput(inputId = "ratio_input",
+                                    label = "Select a range of the solar to wind ratio:",
+                                    min = 0, #min(map_data$slr_cpc), 
+                                    max = 1.5, #max(map_data$slr_cpc), 
+                                    value = c(0,1.5) #c(min(map_data$slr_cpc), max(map_data$slr_cpc))
+                        ) # end solar cap. slider
+                 ),
+                 # END row 3 - column 3 - slider
                  
                  column(1), # column 3 - right padding
                  

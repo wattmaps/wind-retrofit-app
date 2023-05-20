@@ -8,7 +8,9 @@ server <- function(input, output) {
   # setting input for filtering the map data
   map_filter_df <- reactive({
     map_data |>
-      filter(t_state %in% c(input$t_state_input))
+      filter(t_state %in% c(input$t_state_input)) |> 
+      filter(slr_wn >= input$ratio_input[1] & 
+               slr_wn <= input$ratio_input[2])
   })
   
   # sourcing the map script file
@@ -16,7 +18,14 @@ server <- function(input, output) {
   
   # Call the function that creates the map
   output$test_map <- renderLeaflet({
-    popup_content <- paste("<b>Solar Capacity:</b>",
+    popup_content <- paste("<b>Project:</b>",
+                           map_data$p_name,
+                           "<br>",
+                           "<b>Location:</b>",
+                           map_data$t_county, ",",
+                           map_data$t_state,
+                           "<br>",
+                           "<b>Solar Capacity:</b>",
                            round(map_data$slr_cpc, 2),
                            " MW ",
                            "<br>",
