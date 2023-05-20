@@ -23,4 +23,4 @@ sass(
 
 # data for the map
 map_dat <- read_csv("data/WID1_dat_clean.csv")
-map_dat_test <- read_csv("data/map_test_data_clean.csv")
+map_data <- read_csv("data/map_data.csv")

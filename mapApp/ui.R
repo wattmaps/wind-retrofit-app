@@ -307,7 +307,7 @@ ui <- fluidPage(
                         
                         shinyWidgets::pickerInput(inputId = "t_state_input",
                                                   label = "Select state:",
-                                                  choices = unique(map_dat_test$t_state), 
+                                                  choices = unique(map_data$t_state), 
                                                   options = shinyWidgets::pickerOptions(actionsBox = TRUE), 
                                                   # creates "Select All / Deselect All" buttons
                                                   selected = c("CA", "IA", "MA"),

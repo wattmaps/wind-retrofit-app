@@ -9,6 +9,7 @@ library(tidyverse)
 library(ggplot2)
 library(lubridate)
 library(htmltools)
+library(janitor)
 
 ### ------
 # test graph
@@ -50,36 +51,80 @@ WID_1_plot <- ggplot(data = WID_1_dat,
 # Save WID_1_plot as PNG
 ggsave("mapApp/www/images/plots/WID_1_plot.png", WID_1_plot)
 
-# reading in the shapefile
-path = "/Users/colleenmccamy/Documents/MEDS/Capstone/data/exisitingWindContUS/"
+### --------
+# MAP 
+### --------
 
-map_dat <- st_read(paste0(path, "existing_wind_contiguous_us.shp"))
+# reading in the csv files
 
-# only getting 20 to map for testing
-map_dat_test <- head(map_dat, 20) |> 
-  select(c(t_state, t_county, p_name, xlong, ylat)) |> 
-  write_csv(file = "/Users/colleenmccamy/Documents/MEDS/Capstone/code/wind-retrofit-app/mapApp/data/map_test_data_clean.csv")
+# optimization ratios
+model_results <- read_csv("/Users/colleenmccamy/Documents/MEDS/Capstone/data/model_results_variable_tx_distance.csv")
+
+# us PID data w/lat and lon
+us_pids <- read_csv("/Users/colleenmccamy/Documents/MEDS/Capstone/data/us_PID_cords_PID1335.csv")
+
+# joining the two data sets
+model_results <- left_join(model_results, us_pids, by = "PID") 
+
+# setting the geometry and rejoining to get lat/lon
+model_results <- model_results |> 
+  mutate(across(c(lat, lon), as.numeric)) |> 
+  select(-c(t_cap, t_rd, t_count)) |> 
+  st_as_sf(coords = c("lon", "lat"), crs = 4269) |> 
+  left_join(us_pids, by = "PID") |> 
+  select(-c(t_cap, t_rd, t_count))
+
+
+# writing as a csv to read into the app
+st_write(model_results,"/Users/colleenmccamy/Documents/MEDS/Capstone/data/optimization_results_map_data.shp" )
+
+# reading in the map data from the optimization results
+map_data <- st_read("/Users/colleenmccamy/Documents/MEDS/Capstone/data/optimization_results_map_data.shp")
+
+# reading in project attribute data
+pid_data <- read_csv("/Users/colleenmccamy/Documents/MEDS/Capstone/data/us_PID_cords_mapping.csv")
+
+# selecting columns of interest for the PID mapping
+pid_data <- pid_data |> 
+  select(PID, t_state, t_county, p_name, p_year)
+
+# joining the map and pid data by PID
+map_data <- left_join(map_data, pid_data, by = "PID")
+
+map_data <- map_data |> 
+  st_drop_geometry()
+
+# writing the map data
+write_csv(map_data, "/Users/colleenmccamy/Documents/MEDS/Capstone/code/wind-retrofit-app/mapApp/data/map_data.csv")
+
+
+map_data <- map_data |> 
+  janitor::clean_names()
 
 # loading in the map icon
 map_icon <- makeIcon(iconUrl = "mapApp/www/images/map_icon.png")
 
 # pop-up content
-popup_content <- paste("<b>Location:</b> ",
-                       map_dat_test$t_county,
-                       ", ",
-                       map_dat_test$t_state, 
+popup_content <- paste("<b>Solar Capacity:</b>",
+                       round(map_data$slr_cpc, 2),
+                       " MW ",
                        "<br>",
-                       "<b>Project Name:</b> ",
-                       map_dat_test$p_name, 
+                       "<b>Annaul Revenue</b> ",
+                       "$",
+                       format(round(map_data$revenue, 2), 
+                              big.mark = ","),                      
+                       "<br>",
+                       "<b>Solar to Wind Ratio:</b> ",
+                       round(map_data$slr_wn,3), 
                        "<br>",
                        "<img src='/Users/colleenmccamy/Documents/MEDS/Capstone/code/wind-retrofit-app/mapApp/www/images/plots/WID_1_plot.png' width='400'>")
 
 # mapping the data with leaflet
 test_map <- leaflet() |> 
-  addProviderTiles(providers$NASAGIBS.ModisTerraBands367CR) |> #NASAGIBS.ViirsEarthAtNight2012
-  addMarkers(map_dat_test, 
-             lng = map_dat_test$xlong, 
-             lat = map_dat_test$ylat,
+  addProviderTiles(providers$NASAGIBS.ViirsEarthAtNight2012) |> 
+  addMarkers(map_data, 
+             lng = map_data$lon, 
+             lat = map_data$lat,
              #icon = map_icon,
              popup = popup_content)
 

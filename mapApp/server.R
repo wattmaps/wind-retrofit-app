@@ -7,7 +7,7 @@ server <- function(input, output) {
   
   # setting input for filtering the map data
   map_filter_df <- reactive({
-    map_dat_test |>
+    map_data |>
       filter(t_state %in% c(input$t_state_input))
   })
   
@@ -16,22 +16,26 @@ server <- function(input, output) {
   
   # Call the function that creates the map
   output$test_map <- renderLeaflet({
-    popup_content <- paste("<b>Location:</b> ",
-                           map_dat_test$t_county,
-                           ", ",
-                           map_dat_test$t_state, 
+    popup_content <- paste("<b>Solar Capacity:</b>",
+                           round(map_data$slr_cpc, 2),
+                           " MW ",
                            "<br>",
-                           "<b>Project Name:</b> ",
-                           map_dat_test$p_name, 
+                           "<b>Annaul Revenue</b> ",
+                           "$",
+                           format(round(map_data$revenue, 2), 
+                                  big.mark = ","),                      
                            "<br>",
-                           "<img src='images/plots/WID_1_plot.png' width='200'>")
+                           "<b>Solar to Wind Ratio:</b> ",
+                           round(map_data$slr_wn,3), 
+                           "<br>") #,
+                           #"<img src='/images/plots/WID_1_plot.png' width='400'>")
     
     # mapping the data with leaflet
     test_map <- leaflet() |> 
-      addProviderTiles(providers$NASAGIBS.ViirsEarthAtNight2012) |> #NASAGIBS.ModisTerraBands367CR
+      addProviderTiles(providers$CartoDB.Positron) |> 
       addMarkers(map_filter_df(), 
-                 lng = map_filter_df()$xlong, 
-                 lat = map_filter_df()$ylat,
+                 lng = map_filter_df()$lon, 
+                 lat = map_filter_df()$lat,
                  #icon = map_icon,
                  popup = popup_content)
   })
