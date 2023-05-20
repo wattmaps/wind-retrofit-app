@@ -8,6 +8,7 @@ library(tidyverse)
 library(ggplot2)
 library(lubridate)
 library(shinyWidgets)
+library(jsonlite)
 
 # converting sass file to css 
 sass(
@@ -21,6 +22,5 @@ sass(
 ### ---------------
 
 # data for the map
-map_dat <- read_csv("/Users/colleenmccamy/Documents/MEDS/Capstone/code/wind-retrofit-app/mapApp/data/WID1_dat_clean.csv")
-
-map_dat_test <- read_csv("/Users/colleenmccamy/Documents/MEDS/Capstone/code/wind-retrofit-app/mapApp/data/map_test_data_clean.csv")
+map_dat <- read_csv("data/WID1_dat_clean.csv")
+map_dat_test <- read_csv("data/map_test_data_clean.csv")

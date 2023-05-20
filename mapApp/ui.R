@@ -3,7 +3,9 @@ ui <- fluidPage(
   
   # adding css sytle file ----
   header = tags$head(
-    tags$link(rel = "stylesheet", type = "text/css", href = "sass_styles.css")),
+    tags$link(rel = "stylesheet", 
+              type = "text/css", 
+              href = "sass_styles.css")),
   
   # Add title above navbar using fluidRow and column
   fluidRow(
@@ -28,6 +30,7 @@ ui <- fluidPage(
       tags$style(HTML(".navbar { height: 50px; }"))),
     
     title = NULL,
+    #collapsible = TRUE,
     
     #title = "Co-Locate App",
     
@@ -69,7 +72,7 @@ ui <- fluidPage(
                
              ), 
              # END fluid page
-            
+             
              
     ), # END (Page 1) home tabPanel
     
@@ -278,6 +281,8 @@ ui <- fluidPage(
                  column(10, 
                         
                         # adding the leaflet output
+                        
+                        
                         leafletOutput(outputId = "test_map", 
                                       height = "560px")
                  ),
@@ -370,7 +375,7 @@ ui <- fluidPage(
     
   ) # End of Navbar
   
-  ) # END of UI
+) # END of UI
 
 
 
