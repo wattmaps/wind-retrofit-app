@@ -166,14 +166,34 @@ ui <- fluidPage(
                  column(5,
                         
                         tags$h3("Potential Solar Capacity"),
+                        # changing the tab color
+                        tags$style(HTML("
+  .tabbable > .nav > li > a {
+    background-color: #F5F9FA;
+    color: #264653;
+  }
+  
+  .tabbable > .nav > li[class=active] > a {
+    background-color: #2A9D8F;
+    color: white;
+  }
+")),
                         
                         # START tabsetPanel graph 1 ----
                         tabsetPanel(
+                          type = "pills",
                           
                           # start graph 1 tabPanel ----
-                          tabPanel(title = "Graph 1",
+                          tabPanel(title = "Total",
                                    
-                                   "findings data viz here"  
+                                   # title
+                                   tags$h4("Total Solar Potential for Retrofitting Exisiting Wind", 
+                                           style = "text-align: center;"),
+                                   
+                                   # total capacity graphic
+                                   tags$img(src = "images/total_solar_cap.jpg", 
+                                            alt = "1.01 solar to 1 wind",
+                                            style = "max-width: 100%; overflow: hidden;"),
                                    
                           ), # end tabsetPanel graph 1
                           
@@ -196,16 +216,27 @@ ui <- fluidPage(
                  column(5, 
                         
                         # Title
-                        
                         tags$h3("Solar to Wind Ratios"),
-                        
-                        # START tabsetPanel graph 1 ----
+                                             
+                        # START tabsetPanel graph 1 ---
+
                         tabsetPanel(
+                          type = "pills",
                           
                           # start graph 1 tabPanel ----
                           tabPanel(title = "Average",
                                    
-                                   "findings viz 1 here"  
+                                   tags$h4("Average Solar to Wind Ratio for Viable Sites", 
+                                           style = "text-align: center;"),
+                                   
+                                   # average ratio graphic
+                                   tags$img(src = "images/avg_ratio_graphic.jpg", 
+                                             alt = "1.01 solar to 1 wind",
+                                            style = "max-width: 100%; overflow: hidden;"),
+                                   
+                                   tags$h6("*Caclulated for sites with a solar capacity greater than 0 GW", 
+                                           style = "text-align: right;"),
+                                  
                                    
                           ), # end tabsetPanel graph 1
                           

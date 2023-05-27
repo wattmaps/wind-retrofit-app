@@ -17,8 +17,9 @@ hist <- ggplot(map_data, aes(x = slr_wn)) +
   theme(plot.title = element_text(hjust = 0.5))
 hist
 
+#### --------------------
 # Capacity by state graph
-
+#### --------------------
 
 # loading state names
 library(datasets)
@@ -55,3 +56,13 @@ state_data |>
                                         color = "#264653"),
         plot.background = element_rect(fill = "#F5F9FA",
                                        color = NA))
+
+
+#### --------------------
+# Average Ratio
+#### --------------------
+
+avg_ratio_df <- map_data |> 
+  filter(slr_wn > 0)
+
+avg_ratio <- mean(avg_ratio_df$slr_wn)
