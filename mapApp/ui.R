@@ -80,7 +80,7 @@ ui <- fluidPage(
     ### Page 2 About App ---
     ### --------------------
     
-    # (Page 3) findings tabPanel
+    # (Page 2) how to tabPanel
     tabPanel(title = "How to Use the App",
              # START fluid page - about
              fluidPage( 
@@ -146,7 +146,7 @@ ui <- fluidPage(
                
              ) # END fluid page - about
              
-    ), # END (Page 3) findings tabPanel
+    ), # END (Page 2) how to tabPanel
     
     ### --------------------
     ### Page 3 Findings ---
@@ -160,8 +160,12 @@ ui <- fluidPage(
                # START row 1 - graphs
                fluidRow(
                  
+                 column(1), # row 1 - right padding
+                 
                  # START row 1 - column 1 graph1
-                 column(6,
+                 column(5,
+                        
+                        tags$h3("Potential Solar Capacity"),
                         
                         # START tabsetPanel graph 1 ----
                         tabsetPanel(
@@ -174,9 +178,14 @@ ui <- fluidPage(
                           ), # end tabsetPanel graph 1
                           
                           # start tabsetPanel graph 2 ----
-                          tabPanel(title = "Graph 2",
+                          tabPanel(title = "Capacity by States",
                                    
-                                   "findings data viz 2 here"  
+                                   # plot title
+                                   tags$h4("Potential Solar Capacity for Top States", 
+                                           style = "text-align: center;"),
+                                   
+                                   # calling the capacity by state plot
+                                   plotOutput("cpc_state")
                                    
                           ) # end tabsetPanel graph 2
                           
@@ -184,22 +193,32 @@ ui <- fluidPage(
                         
                  ), # END (Page 2) data viz tabPanel
                  
-                 column(6, 
+                 column(5, 
+                        
+                        # Title
+                        
+                        tags$h3("Solar to Wind Ratios"),
                         
                         # START tabsetPanel graph 1 ----
                         tabsetPanel(
                           
                           # start graph 1 tabPanel ----
-                          tabPanel(title = "Graph 1",
+                          tabPanel(title = "Average",
                                    
                                    "findings viz 1 here"  
                                    
                           ), # end tabsetPanel graph 1
                           
                           # start tabsetPanel graph 2 ----
-                          tabPanel(title = "Graph 2",
+                          tabPanel(title = "Distribution",
                                    
-                                   "findings viz 2 here"  
+                                   # plot title and centering
+                                   tags$h4("Distribution of Ratios", 
+                                           style = "text-align: center;"),
+                                   
+                                   # calling the distribution
+                                   plotOutput("ratio_distribution")
+                                  
                                    
                           ) # end tabsetPanel graph 2
                           
@@ -207,7 +226,7 @@ ui <- fluidPage(
                         
                  ),
                  # END row 1 - column 2 - graph2
-                 
+                 column(1) # row 1 - right padding
                ),
                # ENDS ROW 1
                
@@ -229,9 +248,7 @@ ui <- fluidPage(
                  # END row 2  - column 2 - map text
                  
                  # START row 2 - column 3 padding
-                 column(1,
-                        
-                 ),
+                 column(1),
                  # ENDS row 2 - column 1 - padding
                  
                  

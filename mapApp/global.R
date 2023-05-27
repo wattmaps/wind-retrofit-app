@@ -9,6 +9,7 @@ library(ggplot2)
 library(lubridate)
 library(shinyWidgets)
 library(jsonlite)
+library(datasets)
 
 # converting sass file to css 
 sass(
@@ -24,3 +25,13 @@ sass(
 # data for the map
 map_dat <- read_csv("data/WID1_dat_clean.csv")
 map_data <- read_csv("data/map_data.csv")
+abrrev <- state.abb
+names <- state.name
+state_names <- data.frame(state = abrrev, state_names = names)
+
+state_data <- map_data |> 
+  group_by(state = t_state) |> 
+  summarise(total_cap = sum(slr_cpc)) |> 
+  full_join(state_names, by = "state") |> 
+  filter(total_cap >= 2000) |> 
+  mutate(total_cap = total_cap/1000)

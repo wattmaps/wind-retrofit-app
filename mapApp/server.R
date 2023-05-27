@@ -2,7 +2,7 @@
 server <- function(input, output) {
   
   ### -------------
-  # Main Map 
+  # Explore the Map 
   # ---------------
   
   # setting input for filtering the map data
@@ -79,4 +79,55 @@ server <- function(input, output) {
   
   # automatically stopping the app when browser is closed
   #session$onSessionEnded(stopApp)
+  
+  
+  ### -------------
+  # Findings Tab
+  # ---------------
+  
+  
+  ### ---- ratio distribution histogram
+  
+  output$ratio_distribution <- renderPlot({
+    ggplot(map_data, aes(x = slr_wn)) +
+      geom_histogram(bins = round(sqrt(nrow(map_data))),
+                     col = "#E76F51",
+                     fill = "#F4A261") +
+      theme_minimal() +
+      labs(x = "Solar to Wind Ratio",
+           y = "Frequency") +
+      theme(plot.title = element_text(hjust = 0.5),
+            panel.background = element_rect(fill = "#F5F9FA" , 
+                                            color = "#264653"),
+            plot.background = element_rect(fill = "#F5F9FA",
+                                           color = NA))
+  })
+  
+  
+  ### ---- capacity by state map
+  output$cpc_state <- renderPlot({
+    state_data |> 
+      ggplot(aes(x = reorder(state_names, total_cap), 
+                 y = total_cap)) +
+      geom_col(fill = "#2A9D8F") +
+      geom_text(aes(label = round(total_cap, 1)), 
+                hjust = -0.2, vjust = 0.5, 
+                color = "#264653", 
+                size = 3) +  # Add text labels
+      theme_minimal() +
+      theme_minimal() +
+      coord_flip() +  
+      labs(x = NULL,
+           y = "Total Solar Capacity (GW)") +
+      theme(plot.title = element_text(hjust = 0.5),
+            panel.background = element_rect(fill = "#F5F9FA" , 
+                                            color = "#264653"),
+            plot.background = element_rect(fill = "#F5F9FA",
+                                           color = NA))
+    
+  })
+  
+  
+  
+  
 }
