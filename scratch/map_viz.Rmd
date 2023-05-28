@@ -23,11 +23,6 @@ origin <- offset <- as.POSIXct("2014-01-01 00:00") +
 
 # data cleaning and grouping
 WID_1_dat <- energy_gen |> 
-  filter(WID == 1) |> 
-  select(-c(WID, lon, lat, CF_status)) |> 
-  pivot_longer(everything()) |> 
-  rename("hour" = name,
-         "gen" = value) |> 
   separate(hour, c("prefix", "hour"), sep = "_\\D*") |> 
   select(-prefix) |> 
   mutate(hour = as.numeric(hour)) |> 

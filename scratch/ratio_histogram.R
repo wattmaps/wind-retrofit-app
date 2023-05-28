@@ -29,7 +29,7 @@ state_names <- data.frame(state = abrrev, state_names = names)
 
 # making new df
 state_data <- map_data |> 
-  group_by(state = t_state) |> 
+  group_by(state = state) |> 
   summarise(total_cap = sum(slr_cpc)) |> 
   full_join(state_names, by = "state") |> 
   filter(total_cap >= 2000) |> 
@@ -66,3 +66,74 @@ avg_ratio_df <- map_data |>
   filter(slr_wn > 0)
 
 avg_ratio <- mean(avg_ratio_df$slr_wn)
+
+
+#### --------------------
+# Time Series Graph
+#### --------------------
+solar_1316 <- read_csv("/Users/colleenmccamy/Documents/MEDS/Capstone/code/wind-retrofit-app/mapApp/data/solar_capacity_factor_PID1316.csv")
+
+wind_1316 <- read_csv("/Users/colleenmccamy/Documents/MEDS/Capstone/code/wind-retrofit-app/mapApp/data/wind_capacity_factor_PID1316.csv") 
+
+wind_1316 <- wind_1316 |> 
+  rename("wind_gen" = energy_generation) |> 
+  select(wind_gen)
+
+solar_1316 <- solar_1316 |> 
+  rename("solar_gen" = energy_generation) |> 
+  mutate(hour = (hour - 1))
+
+gen_1316 <- cbind(wind_1316, solar_1316)
+
+gen_1316_2012 <- gen_1316[1:8765, ]
+
+# setting the start time
+origin <- offset <- as.POSIXct("2012-01-01 00:00") +
+  as.difftime(min(gen_1316_2012$hour), unit = "hours")
+
+# creating date time column
+gen_1316_2012$datetime <- as.POSIXct(gen_1316_2012$hour * 3600, origin = origin)
+
+# Extract day, hour, month, and year
+gen_1316_2012$day <- day(gen_1316_2012$datetime)
+gen_1316_2012$hour <- hour(gen_1316_2012$datetime)
+gen_1316_2012$month <- month(gen_1316_2012$datetime)
+gen_1316_2012$year <- year(gen_1316_2012$datetime)
+
+# writing the dataframe to call into shiny
+write_csv(gen_1316_2012, "/Users/colleenmccamy/Documents/MEDS/Capstone/code/wind-retrofit-app/mapApp/data/gen_2012_pid_1316.csv")
+
+pid_1316_gen <- read_csv("/Users/colleenmccamy/Documents/MEDS/Capstone/code/wind-retrofit-app/mapApp/data/gen_2012_pid_1316.csv")
+
+pid_1316_gen <- pid_1316_gen |> 
+  select(-datetime) |> 
+  mutate(date_hr = as.POSIXct(paste(pid_1316_gen$year, 
+                                 pid_1316_gen$month, 
+                                 pid_1316_gen$day, 
+                                 pid_1316_gen$hour, 
+                                 sep = "-"),
+                            format = "%Y-%m-%d-%H"))
+
+pid_1316_gen$date <- as.Date(pid_1316_gen$date_hr)
+
+pid_1316_gen <- pid_1316_gen |> 
+  mutate(hour = row_number()) |> 
+  mutate(day_year = yday(date))
+
+pid_1316_gen |> 
+  filter(date == ymd("2012-01-02")) |> 
+  ggplot() +
+  geom_area(aes(x = hour, y = solar_gen),
+            fill = "#f7dc97",
+            col = "#E9C46A") + 
+  geom_area(aes(x = hour, y = wind_gen),
+            fill = "#7dc9c1",
+            col = "#2A9D8F",
+            alpha = 0.5) +
+  theme_minimal() +
+  scale_x_continuous(limits = c(0, 23)) +
+  labs(x = "Capacity Factor for Energy Generation",
+       y = "Hour of the Day")
+
+
+

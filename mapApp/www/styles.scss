@@ -27,7 +27,8 @@ h2 {
 
 h4 {
   color: $navy;
-  font-family: $font-family;
+  font-family: $font-family-body;
+  font-weight: bold; 
 }
 
 p {
@@ -68,5 +69,7 @@ nav {
 .btn.default.active {
   background-color: $yellow;
 }
+
+
 
 

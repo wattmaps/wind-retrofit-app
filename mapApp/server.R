@@ -8,44 +8,64 @@ server <- function(input, output) {
   # setting input for filtering the map data
   map_filter_df <- reactive({
     map_data |>
-      filter(t_state %in% c(input$t_state_input)) |> 
-      filter(slr_wn >= input$ratio_input[1] & 
-               slr_wn <= input$ratio_input[2])
+      filter(state_names %in% c(input$state_input)) |> 
+      filter(slr_cpc >= input$slr_input[1] & 
+               slr_cpc <= input$slr_input[2]) |> 
+      filter(en_comm %in% c(input$en_comm_input)) #|> 
+      #filter(en_bur %in% c(input$en_bur_input))
   })
   
   # sourcing the map script file
   #source("maps/test_map.R")
   
+  icons <- awesomeIcons(
+    icon = 'map-marker-alt',
+    iconColor = '#F5F9FA',
+    library = 'ion',
+    markerColor = "orange"
+  )
+  
   # Call the function that creates the map
   output$test_map <- renderLeaflet({
-    popup_content <- paste("<b>Project:</b>",
-                           map_data$p_name,
-                           "<br>",
-                           "<b>Location:</b>",
-                           map_data$t_county, ",",
-                           map_data$t_state,
-                           "<br>",
-                           "<b>Solar Capacity:</b>",
-                           round(map_data$slr_cpc, 2),
-                           " MW ",
-                           "<br>",
-                           "<b>Annaul Revenue</b> ",
-                           "$",
-                           format(round(map_data$revenue, 2), 
-                                  big.mark = ","),                      
-                           "<br>",
-                           "<b>Solar to Wind Ratio:</b> ",
-                           round(map_data$slr_wn,3), 
-                           "<br>") #,
-                           #"<img src='/images/plots/WID_1_plot.png' width='400'>")
+    popup_content <- paste(
+      "<div line-height: 1.7;'>",
+      
+      "<span style='color: #787d87;'> <b>Project:</b> ", 
+      map_filter_df()$p_name,
+      "</span><br>",
+      
+      "<span style='color: #787d87;'> <b>Location:</b> ", 
+      map_filter_df()$t_county, ",", 
+      map_filter_df()$t_state, 
+      "</span><br>",
+      
+      "<span style='color: #787d87;'><b>Environmental Sensitivity Score:</b> ", 
+      map_filter_df()$env_sens_score, 
+      "</span><br>",
+      
+      "<span style='color: #264653;'><b>Solar Capacity:</b> ", 
+      round(map_filter_df()$slr_cpc), 
+      " MW</span><br>",
+      
+      "<span style='color: #264653;'><b>Annual Revenue:</b> $", 
+      format(round(map_filter_df()$revenue), big.mark = ","), 
+      "</span><br>",
+      
+      "<span style='color: #264653;'><b>Solar to Wind Ratio:</b> ", 
+      round(map_filter_df()$slr_wn, 2), 
+      "</span><br>",
+      
+      "</div>"
+    )
+    
     
     # mapping the data with leaflet
     test_map <- leaflet() |> 
       addProviderTiles(providers$CartoDB.Positron) |> 
-      addMarkers(map_filter_df(), 
+      addAwesomeMarkers(map_filter_df(), 
                  lng = map_filter_df()$lon, 
                  lat = map_filter_df()$lat,
-                 #icon = map_icon,
+                 icon = icons,
                  popup = popup_content)
   })
   
@@ -89,10 +109,11 @@ server <- function(input, output) {
   ### ---- ratio distribution histogram
   
   output$ratio_distribution <- renderPlot({
+    
     ggplot(map_data, aes(x = slr_wn)) +
       geom_histogram(bins = round(sqrt(nrow(map_data))),
-                     col = "#E76F51",
-                     fill = "#F4A261") +
+                     col = "#264653",
+                     fill = "#2A9D8F") +
       theme_minimal() +
       labs(x = "Solar to Wind Ratio",
            y = "Frequency") +
@@ -101,6 +122,7 @@ server <- function(input, output) {
                                             color = "#264653"),
             plot.background = element_rect(fill = "#F5F9FA",
                                            color = NA))
+    
   })
   
   
@@ -109,7 +131,8 @@ server <- function(input, output) {
     state_data |> 
       ggplot(aes(x = reorder(state_names, total_cap), 
                  y = total_cap)) +
-      geom_col(fill = "#2A9D8F") +
+      geom_col(fill = "#E76F51",
+               col = "#264653") +
       geom_text(aes(label = round(total_cap, 1)), 
                 hjust = -0.2, vjust = 0.5, 
                 color = "#264653", 
@@ -127,6 +150,34 @@ server <- function(input, output) {
     
   })
   
+  # reactive dataframe for timeseries
+  pid_1316_gen_df <- reactive({
+    pid_1316_gen |>
+      filter(as.numeric(day_year) == input$hour_input) 
+  })
+  
+  # timeseries capacity factor map
+  output$cp_time_series <- renderPlot({
+    pid_1316_gen_df() |> 
+      ggplot() +
+      geom_area(aes(x = as.numeric(hour), 
+                    y = solar_gen),
+                fill = "#f7dc97",
+                col = "#E9C46A") + 
+      geom_area(aes(x = hour, y = wind_gen),
+                fill = "#7dc9c1",
+                col = "#2A9D8F",
+                alpha = 0.5) +
+      theme_minimal() +
+      scale_x_continuous(limits = c(0, 23)) +
+      labs(x = "Capacity Factor for Energy Generation",
+           y = "Hour of the Day") +
+      theme(panel.background = element_rect(fill = "#F5F9FA" , 
+                                            color = "#264653"),
+            plot.background = element_rect(fill = "#F5F9FA",
+                                           color = NA))
+    
+  })
   
   
   
