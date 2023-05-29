@@ -135,5 +135,76 @@ pid_1316_gen |>
   labs(x = "Capacity Factor for Energy Generation",
        y = "Hour of the Day")
 
+# capacity by 
 
+
+
+
+column(5, 
+       
+       # Title
+       tags$h3("Solar to Wind Ratios"),
+       
+       # adding gap
+       div(class = "gap"),
+       
+       # START tabsetPanel graph 1 ---
+       
+       tabsetPanel(
+         type = "pills",
+         
+         # start average ratio tabPanel ----
+         tabPanel(title = "Average",
+                  
+                  # adding divider line
+                  tags$hr(class = "divider"),
+                  
+                  tags$h4("Average Solar to Wind Ratio for Viable Sites", 
+                          style = "text-align: center;"),
+                  
+                  # average ratio graphic
+                  tags$img(src = "images/avg_ratio_graphic.jpg", 
+                           alt = "1.01 solar to 1 wind",
+                           style = "max-width: 100%; overflow: hidden;"),
+                  
+                  tags$h6("*Caclulated for sites with a solar capacity greater than 0 GW", 
+                          style = "text-align: right;"),
+                  
+                  
+         ), # end tabsetPanel avg ratio 
+         
+         # start tabsetPanel ratio dist ----
+         tabPanel(title = "Distribution",
+                  
+                  # adding divider line
+                  tags$hr(class = "divider"),
+                  
+                  # plot title and centering
+                  tags$h4("Distribution of Ratios", 
+                          style = "text-align: center;"),
+                  
+                  # calling the distribution
+                  plotOutput("ratio_distribution")
+                  
+                  
+         ) # end tabsetPanel ratio dist
+         
+       ) # END tabsetPanel
+       
+),
+
+
+# start column 1 ratio
+column(12,
+       
+       tags$h3("Wind and Solar Complementary Capacity Factors",
+               style = "text-align: center;"),
+       
+       # adding gap
+       div(class = "gap"),
+       
+       # calling the distribution
+       plotOutput("cp_time_series"),
+       
+), # end column 1 ratio
 

@@ -12,7 +12,7 @@ library(jsonlite)
 library(datasets)
 library(fresh)
 library(fontawesome)
-library(plotly)
+library(DT)
 
 # converting sass file to css 
 sass(
@@ -25,7 +25,6 @@ sass(
 ### ---------------
 
 # data for the map
-map_dat <- read_csv("data/WID1_dat_clean.csv")
 map_data <- read_csv("data/results.csv")
 abrrev <- state.abb
 names <- state.name
@@ -36,7 +35,7 @@ map_data <- map_data |>
   mutate(en_comm = case_when(energy_community == 1 ~ "TRUE",
                              energy_community == 0 ~ "FALSE")) |> 
   mutate(en_bur = case_when(energy_brdn == 1 ~ "TRUE",
-                            energy_brdn == 0 ~ "FALSE"))
+                            energy_brdn == NA ~ "FALSE"))
 
 # data for state bar graph
 state_data <- map_data |> 
@@ -63,4 +62,27 @@ pid_1316_gen <- pid_1316_gen |>
 # adding date column for the time series graph
 pid_1316_gen$date <- as.Date(pid_1316_gen$date_hr)
 
+energy_cols <- c("pid", "p_name", "p_year", "t_cap", "t_count", "slr_cpc", "wnd_cpc", "slr_wn", "tx_cpct", "revenue", "cost", "profit", "county", "state_names")
 
+spatial_cols <- c("pid", "p_name", "slr_cpc", "env_sens_score", "dac_sts", "energy_brdn", "foss_emplmt", "coal_emplmt", "outage_n"  , "outage_dur", "rci", "energy_community", "county","state_names")
+
+transmission_cols <- c("pid", "p_name","lines", "max_volt", "min_volt", "distance_m", "distance_km")
+
+location_cols <- c("pid", "p_name","lat", "lon", "fips", "county", "state_names" )
+   
+
+# data for the tables
+energy_data <- map_data |> 
+  select(all_of(energy_cols)) |> 
+  rename("state" = state_names)
+
+spatial_data <- map_data |> 
+  select(all_of(spatial_cols))|> 
+  rename("state" = state_names)
+
+transmission_data <- map_data |> 
+  select(all_of(transmission_cols))
+
+location_data <- map_data |> 
+  select(all_of(location_cols))|> 
+  rename("state" = state_names)

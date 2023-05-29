@@ -12,7 +12,7 @@ server <- function(input, output) {
       filter(slr_cpc >= input$slr_input[1] & 
                slr_cpc <= input$slr_input[2]) |> 
       filter(en_comm %in% c(input$en_comm_input)) #|> 
-      #filter(en_bur %in% c(input$en_bur_input))
+     # filter(en_bur %in% c(input$en_bur_input))
   })
   
   # sourcing the map script file
@@ -76,12 +76,14 @@ server <- function(input, output) {
   # Reactive value for selected dataset ----
   datasetInput <- reactive({
     switch(input$dataset,
-           "map data" = map_data,
-           "graph data" = map_dat)
+           "energy attributes" = energy_data,
+           "spatial attributes" = spatial_data,
+           "transmission attributes" = transmission_data,
+           "location attributes" = location_data)
   })
   
   # Table of selected dataset ----
-  output$table <- renderTable({
+  output$table <- renderDataTable({
     datasetInput()
   })
   
@@ -170,8 +172,9 @@ server <- function(input, output) {
                 alpha = 0.5) +
       theme_minimal() +
       scale_x_continuous(limits = c(0, 23)) +
-      labs(x = "Capacity Factor for Energy Generation",
-           y = "Hour of the Day") +
+      labs(x = "Hour of the Day",
+           y = "Capacity Factor for Energy Generation"
+           ) +
       theme(panel.background = element_rect(fill = "#F5F9FA" , 
                                             color = "#264653"),
             plot.background = element_rect(fill = "#F5F9FA",

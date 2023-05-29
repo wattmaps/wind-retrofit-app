@@ -106,79 +106,7 @@ ui <- fluidPage(
     ), # END (Page 1) home tabPanel
     
     ### --------------------
-    ### Page 2 About App ---
-    ### --------------------
-    
-    # (Page 2) how to tabPanel
-    tabPanel(title = "How to Use the App",
-             # START fluid page - about
-             fluidPage( 
-               
-               # START row 1 - how to
-               fluidRow(
-                 
-                 column(1), # row 1 - left padding
-                 
-                 # START row 1 - column 2 data
-                 column(10, 
-                        includeMarkdown("text/how_to.md")
-                 ),
-                 # END row 1 - column 2
-                 
-                 column(1) # row 1 - right padding
-                 
-               ),
-               # END row 1 - how to
-               
-               # START row 2 - data & terms
-               fluidRow(
-                 
-                 column(1), # row 1 - left padding
-                 
-                 # START row 1 - column 2
-                 column(3,
-                        #REPLACE
-                        "Test text"),
-                 # ENDS row 1 - column 2
-                 
-                 # START row 1 - column 3 data
-                 column(5, 
-                        includeMarkdown("text/data_explanation.md")),
-                 # END row 1 - column 3
-                 
-                 column(1), # row 1 - left padding
-                 
-               ),
-               # END row 2 - data & terms
-               
-               # START row 3 - Terms & warnings
-               fluidRow(
-                 
-                 column(1), # row 1 - right padding
-                 
-                 # START row 3 - column 1
-                 column(5, 
-                        #REPLACE
-                        "Test text"),
-                 # END row 3 - column 1
-                 
-                 # START row 3 - column 2
-                 column(5, 
-                        #REPLACE
-                        "Test text"),
-                 # START row 3 - column 3
-                 
-                 column(1), # row 1 - right padding
-                 
-               )
-               # START row 3 - Terms & warnings
-               
-             ) # END fluid page - about
-             
-    ), # END (Page 2) how to tabPanel
-    
-    ### --------------------
-    ### Page 3 Findings ---
+    ### Page 2 Findings ---
     ### --------------------
     
     # (Page 2) tabular data tabPanel
@@ -193,9 +121,10 @@ ui <- fluidPage(
                  column(1), # row 1 - right padding
                  
                  # START row 1 - column 1 graph1
-                 column(5,
+                 column(10,
                         
-                        tags$h3("Potential Solar Capacity"),
+                        tags$h3("Optimization Results",
+                                style = "text-align: center;"),
                         # changing the tab color
                         tags$style(HTML("
   .tabbable > .nav > li > a {
@@ -218,7 +147,7 @@ div(class = "gap"),
                           type = "pills",
                           
                           # start graph 1 tabPanel ----
-                          tabPanel(title = "Total",
+                          tabPanel(title = "Total Capacity",
                                    
                                    # adding gap
                                    div(class = "gap"),
@@ -226,90 +155,166 @@ div(class = "gap"),
                                    # Add the divider line
                                    tags$hr(class = "divider"),
                                    
-                                   # title
-                                   tags$h4("Total Solar Potential for Retrofitting Exisiting Wind", 
-                                           style = "text-align: center;"),
-                      
+                                   fluidRow(
+                                     # START row 2 - wind solar complementary 
+                                     column(12,
+                                            
+                                            # adding gap
+                                            div(class = "gap"),
+                                            
+                                            # Add the divider line
+                                            #tags$hr(class = "divider-main"),
+                                            
+                                            # adding gap
+                                            div(class = "gap"),
+                                            
+                                     )
+                                     
+                                   ),
+                                   # END row 2 - wind solar complementary
                                    
-                                   
-                                   # total capacity graphic
-                                   tags$img(src = "images/total_solar_cpc.jpg", 
-                                            alt = "116 GW potential solar",
-                                            style = "max-width: 100%; overflow: hidden;"),
+                                   # start row in capacity tabPanel
+                                   fluidRow(
+                                     
+                                     # column within tabPanel
+                                     column(5, 
+                                            
+                                            # title
+                                            tags$h4("Total Solar Potential for Retrofitting Exisiting Wind", 
+                                                    style = "text-align: center;"),
+                                            
+                                            
+                                            
+                                            # total capacity graphic
+                                            tags$img(src = "images/total_solar_cpc.jpg", 
+                                                     alt = "116 GW potential solar",
+                                                     style = "max-width: 100%; overflow: hidden;"),
+                                            
+                                            ),
+                                     
+                                     # column 2 - by state plot
+                                     column(5, 
+                                            
+                                            # plot title
+                                            tags$h4("Potential Solar Capacity for Top States", 
+                                                    style = "text-align: center;"),
+                                            
+                                            # calling the capacity by state plot
+                                            plotOutput("cpc_state")
+                                            
+                                            ),
+
+                                   ),
+ 
                                    
                           ), # end tabsetPanel graph 1
                           
                           # start tabsetPanel graph 2 ----
-                          tabPanel(title = "Capacity by States",
+                          tabPanel(title = "Solar to Wind Ratios",
                                    
                                    # adding divider line
                                    tags$hr(class = "divider"),
                                    
-                                   # plot title
-                                   tags$h4("Potential Solar Capacity for Top States", 
-                                           style = "text-align: center;"),
+                                   fluidRow(
+                                     
+                                     # start column 1 ratio
+                                     column(5, 
+                                            
+                                            tags$h4("Average Solar to Wind Ratio for Viable Sites", 
+                                                    style = "text-align: center;"),
+                                            
+                                            # average ratio graphic
+                                            tags$img(src = "images/avg_ratio_graphic.jpg", 
+                                                     alt = "1.01 solar to 1 wind",
+                                                     style = "max-width: 100%; overflow: hidden;"),
+                                            
+                                            tags$h6("*Caclulated for sites with a solar capacity greater than 0 GW", 
+                                                    style = "text-align: right;")
+                                            
+                                            ), # end column 1 ratio
+                                     
+                                     # start column 2 ratio
+                                     column(5, 
+                                            
+                                            # plot title and centering
+                                            tags$h4("Distribution of Ratios", 
+                                                    style = "text-align: center;"),
+                                            
+                                            # calling the distribution
+                                            plotOutput("ratio_distribution")
+                                            
+                                            ) # column 2 ratio
+
+                                   ) # end of fluid Row
+
+                          ), # end tabsetPanel graph 2
+                          
+                          # start tabsetPanel 3 ----
+                          tabPanel(title = "Solar & Wind Complementarity",
                                    
-                                   # calling the capacity by state plot
-                                   plotOutput("cpc_state")
+                                   # adding divider line
+                                   tags$hr(class = "divider"),
                                    
-                          ) # end tabsetPanel graph 2
+                                   # start fluidRow 1
+                                   fluidRow(
+                                     
+                                     # start timeseries column
+                                     column(12,
+                                            
+                                            tags$h3("Wind and Solar Complementary Capacity Factors",
+                                                    style = "text-align: center;"),
+                                            # adding gap
+                                            div(class = "gap"),
+                                            # calling the distribution
+                                            plotOutput("cp_time_series")
+
+                                     ) # end timeseries column
+                                     
+
+                                   ), # end of fluid Row 1
+                                   
+                                   # start fluidRow 2
+                                   fluidRow(
+                                     
+                                     column(1), # left padding
+                                     
+                                     # start slider column
+                                     column(5,
+                                            
+                                            # adding gap
+                                            div(class = "gap"),
+                                            
+                                            # day slider input
+                                            sliderInput(inputId = "hour_input",
+                                                        label = "Select a Day of the Year:",
+                                                        min = min(pid_1316_gen$day_year, na.rm = TRUE), 
+                                                        max = round(max(pid_1316_gen$day_year, 
+                                                                        na.rm = TRUE)-1), 
+                                                        value = 68),
+                                            
+                                            
+                                     ), # end slider column
+                                     
+                                     # start text column
+                                     column(5, 
+                                            # adding gap
+                                            div(class = "gap"),
+                                            
+                                            tags$body("This graph showcases wind and solar capacity factors for 2012 for Neosho Ridge wind project in Neosho County, Kansas. The ratio for solar to wind is 1.17 with an estimated annual solar capacity of 357 MW and wind capacity of 305 MW.")
+                                            
+                                            ), # end text column
+                                     
+                                     column(1) # right padding
+                                     
+                                     
+                                   ) # end of fluid Row 1
+                                   
+                          ) # end tabsetPanel 3
                           
                         ) # END tabsetPanel
                         
                  ), # END (Page 2) data viz tabPanel
-                 
-                 column(5, 
-                        
-                        # Title
-                        tags$h3("Solar to Wind Ratios"),
-                        
-                        # adding gap
-                        div(class = "gap"),
-                                             
-                        # START tabsetPanel graph 1 ---
-
-                        tabsetPanel(
-                          type = "pills",
-                          
-                          # start average ratio tabPanel ----
-                          tabPanel(title = "Average",
-                                   
-                                   # adding divider line
-                                   tags$hr(class = "divider"),
-                                   
-                                   tags$h4("Average Solar to Wind Ratio for Viable Sites", 
-                                           style = "text-align: center;"),
-                                   
-                                   # average ratio graphic
-                                   tags$img(src = "images/avg_ratio_graphic.jpg", 
-                                            alt = "1.01 solar to 1 wind",
-                                            style = "max-width: 100%; overflow: hidden;"),
-                                   
-                                   tags$h6("*Caclulated for sites with a solar capacity greater than 0 GW", 
-                                           style = "text-align: right;"),
-                                   
-                                   
-                          ), # end tabsetPanel avg ratio 
-                          
-                          # start tabsetPanel ratio dist ----
-                          tabPanel(title = "Distribution",
-                                   
-                                   # adding divider line
-                                   tags$hr(class = "divider"),
-                                   
-                                   # plot title and centering
-                                   tags$h4("Distribution of Ratios", 
-                                           style = "text-align: center;"),
-                                   
-                                   # calling the distribution
-                                   plotOutput("ratio_distribution")
-                                   
-                                   
-                          ) # end tabsetPanel ratio dist
-                          
-                        ) # END tabsetPanel
-                        
-                 ),
+  
                  # END row 1 - column 2 - graph2
                  column(1) # row 1 - right padding
                ),
@@ -360,85 +365,6 @@ fluidRow(
 ),
 # END row 2 - wind solar complementary
 
-               
-               # START row 2 - Map text 
-fluidRow(
-  # START row 2 - wind solar complementary 
-  column(1),
-  # ENDS row 2 - column 1 - padding
-  
-  # START row 2 - column 2 - complementary graph
-  column(10, 
-         
-         tags$h3("Wind and Solar Complementary Capacity Factors",
-                 style = "text-align: center;"),
-         
-         # adding gap
-         div(class = "gap"),
-         
-         # calling the distribution
-         plotOutput("cp_time_series"),
-         
-        
-  ),
-  # END row 2 - complementary graph
-  
-),
-               # END row 2 - wind solar complementary
-
-
-fluidRow(
-  # START row 2 - wind solar complementary 
-  column(1),
-  # ENDS row 2 - column 1 - padding
-  
-  # START row 2 - column 2 - complementary graph
-  column(5, 
-
-         # adding gap
-         div(class = "gap"),
-         
-         sliderInput(inputId = "hour_input",
-                     label = "Select a Day of the Year:",
-                     min = min(pid_1316_gen$day_year, na.rm = TRUE), 
-                     max = round(max(pid_1316_gen$day_year, 
-                                     na.rm = TRUE)-1), 
-                     value = 68),
-         
-  ),
-  # END row 2 - complementary graph
-  
-  column(5, 
-         
-         # adding gap
-         div(class = "gap"),
-         
-         tags$body("This graph looks at wind and solar capacity factors for 2012 for Neosho Ridge wind project in Neosho County, Kansas. The ratio for solar to wind is 1.17 with an estimated annual solar capacity of 357 MW and wind capacity of 305 MW.")
-         
-         
-  ),
-  # END row 2 - complementary graph
-  
-),
-
-# END row 2 - wind solar complementary
-
-fluidRow(
-  # START row 2 - wind solar complementary 
-  column(12,
-         
-         # adding gap
-         div(class = "gap"),
-         
-         # Add the divider line
-         tags$hr(class = "divider-main"),
-         
-         # adding gap
-         div(class = "gap"),
-         
-  )
-  
-),
 
 # START row 2 - Map text 
 fluidRow(
@@ -492,7 +418,13 @@ fluidRow(
                  column(10, 
                         
                         # REPLACE
-                        "Map text - above"
+                        tags$h3("Map of Existing Wind Projects for Potential Solar PV Retrofit", 
+                                style = "text-align: center;"),
+                        
+                        tags$body("Click on the icons to see project details and potential capacity and filter by state, solar capacity and more with the options below the map. "),
+                        
+                        # adding gap
+                        div(class = "gap"),
                  ),
                  # END row 1 - column 2 - map
                  
@@ -533,7 +465,7 @@ fluidRow(
                         # adding gap
                         div(class = "gap"),
                         
-                        tags$h3("Map Filtering Options",
+                        tags$h4("Map Filtering Options",
                                 style = "text-align: center;"),
                         
                         # adding gap
@@ -646,10 +578,18 @@ fluidRow(
                  # START row 1 - column 4 - download button
                  column(2, 
                         selectInput("dataset", "Choose a dataset:",
-                                    choices = c("map data", "graph data")),
+                                    choices = c("energy attributes", 
+                                                "spatial attributes",
+                                                "transmission attributes",
+                                                "location attributes")),
                         
                         # Button
-                        downloadButton("downloadData", "Download")
+                        downloadButton("downloadData", "Download"),
+                        
+                        # adding gap
+                        div(class = "gap")
+                        
+                      
                  ),
                  # END row 1  - column 4 - download button
                  
@@ -658,7 +598,7 @@ fluidRow(
                  column(8, 
                         
                         #INSET TABLE
-                        tableOutput("table")
+                        dataTableOutput("table")
                  ),
                  # END row 1  - column 5 - data table
                  
@@ -675,13 +615,87 @@ fluidRow(
              # END fluid page
              
              
-    ) # END (Page 5) tabular data 
+    ), # END (Page 5) tabular data 
     
     
     
-    ### --------------------
-    ### END Navbar Page ----
-    ### --------------------  
+    
+### --------------------
+### Page 2 About App ---
+### --------------------
+
+# (Page 2) how to tabPanel
+tabPanel(title = "Assumptions & Terms",
+         # START fluid page - about
+         fluidPage( 
+           
+           # START row 1 - how to
+           fluidRow(
+             
+             column(1), # row 1 - left padding
+             
+             # START row 1 - column 2 data
+             column(10, 
+                    includeMarkdown("text/how_to.md")
+             ),
+             # END row 1 - column 2
+             
+             column(1) # row 1 - right padding
+             
+           ),
+           # END row 1 - how to
+           
+           # START row 2 - data & terms
+           fluidRow(
+             
+             column(1), # row 1 - left padding
+             
+             # START row 1 - column 2
+             column(3,
+                    #REPLACE
+                    "Test text"),
+             # ENDS row 1 - column 2
+             
+             # START row 1 - column 3 data
+             column(5, 
+                    includeMarkdown("text/data_explanation.md")),
+             # END row 1 - column 3
+             
+             column(1), # row 1 - left padding
+             
+           ),
+           # END row 2 - data & terms
+           
+           # START row 3 - Terms & warnings
+           fluidRow(
+             
+             column(1), # row 1 - right padding
+             
+             # START row 3 - column 1
+             column(5, 
+                    #REPLACE
+                    "Test text"),
+             # END row 3 - column 1
+             
+             # START row 3 - column 2
+             column(5, 
+                    #REPLACE
+                    "Test text"),
+             # START row 3 - column 3
+             
+             column(1), # row 1 - right padding
+             
+           )
+           # START row 3 - Terms & warnings
+           
+         ) # END fluid page - about
+         
+), # END (Page 2) how to tabPanel
+
+### --------------------
+### END Navbar Page ----
+### --------------------  
+
     
   ) # End of Navbar
   
