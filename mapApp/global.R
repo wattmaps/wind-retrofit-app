@@ -86,3 +86,8 @@ transmission_data <- map_data |>
 location_data <- map_data |> 
   select(all_of(location_cols))|> 
   rename("state" = state_names)
+
+# placeholder for metadata
+metadata <- map_data |> 
+  select("pid")
+

@@ -79,7 +79,8 @@ server <- function(input, output) {
            "energy attributes" = energy_data,
            "spatial attributes" = spatial_data,
            "transmission attributes" = transmission_data,
-           "location attributes" = location_data)
+           "location attributes" = location_data,
+           "metadata" = metadata)
   })
   
   # Table of selected dataset ----
@@ -182,6 +183,14 @@ server <- function(input, output) {
     
   })
   
+  ### -------------
+  # Methods & Sources
+  # ---------------
   
+  data_description <- read_csv("data/data_descrip.csv")
+  
+  output$data_description <- renderDataTable({
+    data_description
+  })
   
 }

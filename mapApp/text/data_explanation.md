@@ -1,3 +1,3 @@
-#### Show me the data
+### Data Sources
 
-Check out the **Explore the Data** & **Explore the Map** page to find interactive data visualizations looking at optimal ratios of solar to wind for retrofitting exisiting wind sites within the US. Data was aquired through the NREL [National Solar Radiance Database](https://nsrdb.nrel.gov/)  and simulated through the [System Advisory Model](https://sam.nrel.gov/) to generate capacity factor estimates.
+The data used in this study is outlined below in the following table. 
