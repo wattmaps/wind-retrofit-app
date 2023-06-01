@@ -191,20 +191,17 @@ column(5,
          
        ) # END tabsetPanel
        
-),
+)
 
 
-# start column 1 ratio
-column(12,
-       
-       tags$h3("Wind and Solar Complementary Capacity Factors",
-               style = "text-align: center;"),
-       
-       # adding gap
-       div(class = "gap"),
-       
-       # calling the distribution
-       plotOutput("cp_time_series"),
-       
-), # end column 1 ratio
+
+
+
+
+
+
+
+
+
+
 

@@ -49,3 +49,13 @@ nav {
 .btn.default.active {
   background-color: #e9c46a;
 }
+
+.custom-button {
+  font-family: Montserrat;
+  background-color: blue;
+  color: white;
+}
+
+.custom-button .fa-github {
+  color: white;
+}

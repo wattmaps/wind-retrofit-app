@@ -36,6 +36,9 @@ ui <- fluidPage(
     color = "#F4A261"
   ),
   
+  # Enable shinyjs
+  useShinyjs(),
+  
   # Add title above navbar using fluidRow and column
   fluidRow(
     column(
@@ -95,8 +98,148 @@ ui <- fluidPage(
                  
                  column(1) # right padding
                  
-               )
+               ),
                # END row 1
+               
+               # START row 2
+               fluidRow(
+                 
+                 column(1),
+                 
+                 # row 2 divider
+                 column(2), 
+                 
+
+                 # row 2 divider
+                 column(9,
+                        
+                        # adding gap
+                        div(class = "gap"),
+                        
+                        # adding divider line
+                        tags$hr(class = "divider"),
+                        
+                        # adding gap
+                        div(class = "gap"))
+               
+               ),
+               # END row 2
+
+               
+               # START row 3
+               fluidRow(
+                 
+                 column(1), # left padding
+                 
+                 # row w column 2
+                 column(10,
+                        
+                        tags$h4("Contributors:"),
+                        
+                        # adding gap
+                        div(class = "gap"),
+                        
+                        tags$body(HTML("<b>Dr. Grace C. Wu</b> is an Assistant Professor in the Environmental Studies Program at UC Santa Barbara. Before joining UCSB, Grace was a Smith Conservation Fellow at The Nature Conservancy and the National Center for Ecological Analysis and Synthesis. She was also a UC President’s Postdoctoral Fellow at the John Muir Institute of the Environment at UC Davis. She was trained in systems thinking and interdisciplinary approaches in the Energy and Resources Group at UC Berkeley.")),
+                        
+                        # adding gap
+                        div(class = "gap"),
+                        
+                        
+                        tags$body(HTML("<b>Michelle Lam, Colleen McCamy and Alessandra Vidal Meza </b> contributed to this project through their capstone project for the <a href='https://bren.ucsb.edu/masters-programs/master-environmental-data-science'>Master of Environmental Data Science</a> at the Bren School of Environmental Science & Management, UC Santa Barbara during the 2022-2023 school year. Capstone projects offer students the opportunity to collaboratively design, execute, and present a professional environmental data science product working with both internal and external stakeholders.")), 
+                        
+                        # adding gap
+                        div(class = "gap"),
+                        # adding gap
+                        div(class = "gap")
+                        
+                        ),
+
+                 
+                 column(1) # right padding
+                 
+               ),
+               # END row 3
+               
+               
+               # START row 2
+               fluidRow(
+                 
+                 # row 2 divider
+                 column(3),
+                 
+                 column(9,
+                        
+                        # adding gap
+                        div(class = "gap"),
+                        
+                        # adding divider line
+                        tags$hr(class = "divider"),
+                        
+                        # adding gap
+                        div(class = "gap")
+                        
+                        )
+                 
+               ),
+               # END row 2
+               
+               
+               # START row 4
+               fluidRow(
+                 
+                 # row 4 divider
+                 column(1),
+                 
+                 column(10,
+                        
+                        # adding gap
+                        div(class = "gap"),
+                        
+                        # acknowledgements
+                        tags$h4("Acknowledgements:"),
+                        
+                        # adding divider line
+                        tags$body("A special thank you to advisors and committee members: Dr. Naomi Tague, and Dr. Ruth Oliver, as well as Dr. Ranjit Deshmukh, Jamie Montgomery, Sam Csik,  Kat Le, and Brad Hill. This study builds on findings from the Power of Place study by The Nature Conservancy. A special thank you to Power of Place collaborators:  Joe Fargione, Nels Johnson, Christel Hiltibran, Chris Hise, and Liz Kalies, as well as consultants Ryan Jones from Evolved Energy Research and Emily Leslie form Montara Mountain Energy."),
+                        
+                        # adding gap
+                        div(class = "gap")
+                        
+                 )
+                 
+               ),
+               # END row 4
+               
+               
+               fluidRow(
+                 
+                 # row 4 divider
+                 column(1),
+                 
+                 column(10, 
+                        # Define the GitHub button using custom HTML code
+                        # adding gap
+                        div(class = "gap"),
+                        
+                        actionButton(
+                          inputId = "button",
+                          label = span(
+                            class = "fa fa-github",
+                            "Github"
+                          )
+                        ),
+                        
+                        # adding gap
+                        #actionButton("button", "Github"),
+                        
+                        
+ 
+                        # adding gap
+                        div(class = "gap"),
+                        ),
+                 
+                 column(1)
+                 
+               )
                
                
              ), 
@@ -123,6 +266,7 @@ ui <- fluidPage(
                  # START row 1 - column 1 graph1
                  column(10,
                         
+                        # title
                         tags$h3("Results",
                                 style = "text-align: center;"),
                         
@@ -152,7 +296,7 @@ tabsetPanel(
   type = "pills",
   
   # start graph 1 tabPanel ----
-  tabPanel(title = "Total Capacity",
+  tabPanel(title = "Total Solar Capacity",
            
            # adding gap
            div(class = "gap"),
@@ -171,9 +315,7 @@ tabsetPanel(
                     #tags$hr(class = "divider-main"),
                     
                     # adding gap
-                    div(class = "gap"),
-                    
-             )
+                    div(class = "gap"))
              
            ),
            # END row 2 - wind solar complementary
@@ -182,7 +324,7 @@ tabsetPanel(
            fluidRow(
              
              # column within tabPanel
-             column(5, 
+             column(4, 
                     
                     # title
                     tags$h4("Total Solar Potential for Retrofitting Exisiting Wind", 
@@ -198,18 +340,48 @@ tabsetPanel(
              ),
              
              # column 2 - by state plot
-             column(5, 
+             column(6, 
                     
-                    # plot title
-                    tags$h4("Potential Solar Capacity for Top States", 
+                    # plot title and centering
+                    tags$h4("Total Solar Capacity By State (MW)", 
                             style = "text-align: center;"),
                     
-                    # calling the capacity by state plot
-                    plotOutput("cpc_state")
+                    # adding gap
+                    div(class = "gap"),
+                    
+                    # plot avg ratio per state
+                    leafletOutput(outputId = "state_cap", 
+                                  height = "350px")
+                    
                     
              ),
              
            ),
+           
+           fluidRow(
+             
+             column(1),
+             
+             column(10, 
+                    
+                    # adding gap
+                    div(class = "gap"),
+                    
+                    # # plot title and centering
+                    # tags$h4("Total Solar Capacity By State (MW)", 
+                    #         style = "text-align: center;"),
+                    # 
+                    # # adding gap
+                    # div(class = "gap"),
+                    # 
+                    # # plot avg ratio per state
+                    # leafletOutput(outputId = "state_cap", 
+                    #               height = "350px")
+             ),
+             
+             column(1)
+             
+           )
            
            
   ), # end tabsetPanel graph 1
@@ -246,11 +418,38 @@ tabsetPanel(
                             style = "text-align: center;"),
                     
                     # calling the distribution
-                    plotOutput("ratio_distribution")
+                    plotOutput("ratio_distribution"),
+                    
+                    
                     
              ) # column 2 ratio
              
-           ) # end of fluid Row
+           ), # end of fluid Row
+           
+           fluidRow(
+             
+             column(1),
+             
+             column(10, 
+                    
+                    # adding gap
+                    div(class = "gap"),
+                    
+                    # plot title and centering
+                    tags$h4("Average Ratio Per State", 
+                            style = "text-align: center;"),
+                    
+                    # adding gap
+                    div(class = "gap"),
+                    
+                    # plot avg ratio per state
+                    leafletOutput(outputId = "state_ratio", 
+                                  height = "350px")
+                    ),
+             
+             column(1)
+             
+           )
            
   ), # end tabsetPanel graph 2
   
@@ -317,7 +516,7 @@ tabsetPanel(
   ), # end tabsetPanel 3
   
   # start tabsetPanel 4 ----
-  tabPanel(title = "Energy Justice",
+  tabPanel(title = "Equitable Investment",
            
            # adding divider line
            tags$hr(class = "divider"),
@@ -327,6 +526,18 @@ tabsetPanel(
              
              # start timeseries column
              column(12,
+                    
+                    tags$h4("Total Solar Potential for Retrofitting Exisiting Wind", 
+                            style = "text-align: center;"),
+                    
+                    # adding gap
+                    div(class = "gap"),
+                    
+                    tags$body("This study also evaluated equitable investment in renewable energy deployment using DOE census tract-level data on disadvantaged indices and DAC status. The DOE uses fossil dependence, energy burden, environmental and climate hazard, and sociodemographic data at the census tract-level to assess for DAC status. Spatial aggregation of the data products was conducted to contextualize the energy injustice landscape of existing wind projects."),
+                    
+                    # adding gap
+                    div(class = "gap"),
+                    
              ) # end timeseries column
              
              
@@ -355,7 +566,7 @@ tabsetPanel(
   ), # end tabsetPanel 4
   
   # start tabsetPanel 5 ----
-  tabPanel(title = "IRA Incentives",
+  tabPanel(title = "Incentive Eligibility",
            
            # adding divider line
            tags$hr(class = "divider"),
@@ -365,6 +576,19 @@ tabsetPanel(
              
              # start timeseries column
              column(12,
+                    
+                    tags$h4("Potential Federal Incentive Eligibility for Adding Solar PV", 
+                            style = "text-align: center;"),
+                    
+                    # adding gap
+                    div(class = "gap"),
+                    
+                   tags$body("This study finds that around 12 percent of viable existing wind projects are sited within counties with IRA energy communities and account for over 13,900 MW of potential solar capacity. This suggests that around 12 percent of viable existing wind projects may receive a 10 percent increase in federal tax benefits. However, viable existing wind projects in energy communities also operate, on average, at near 76 percent capacity to apply for them."),
+                   
+                   # adding gap
+                   div(class = "gap"),
+                    
+                    
              ) # end timeseries column
              
              
@@ -376,11 +600,16 @@ tabsetPanel(
              column(1), # left padding
              
              # start slider column
-             column(5
+             column(5,
+                    
+                    plotOutput("energy_comm_solar_cap")
+                    
              ), # end slider column
              
              # start text column
              column(5, 
+                    
+                    plotOutput("rci_plot")
                     
                     
              ), # end text column
@@ -393,7 +622,7 @@ tabsetPanel(
   ), # end tabsetPanel 5
   
   # start tabsetPanel 6 ----
-  tabPanel(title = "Environmental Scores",
+  tabPanel(title = "Environmental Impact",
            
            # adding divider line
            tags$hr(class = "divider"),
@@ -403,6 +632,8 @@ tabsetPanel(
              
              # start timeseries column
              column(12,
+                    plotOutput("env_score_ridge")
+                    
              ) # end timeseries column
              
              
@@ -618,24 +849,16 @@ tabPanel(title =  "Explore the Map",
              # START row 3 - column 4 - techno-econ filter
              column(3, 
                     
+                    tags$h5("Filter by Project Attribute:"),
+                    
                     # start energy community switch
                     prettySwitch(
                       inputId = "en_comm_input",
-                      label = "Energy Community", 
+                      label = "Potential IRA Incentive Eligible", 
                       status = "warning",
                       fill = TRUE
                     ),# end energy community switch
-                    
-                    # start energy burden switch
-                    prettySwitch(
-                      inputId = "en_bur_input",
-                      label = "Energy Burden", 
-                      status = "warning",
-                      fill = TRUE
-                    ),# end energy burden switch
-                    
-                    
-                    
+
                     
              ),
              # END row 3 - column 2 - select states
