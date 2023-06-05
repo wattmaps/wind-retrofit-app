@@ -82,7 +82,7 @@ energy_data <- map_data |>
   rename("state" = "state_names")
 
 techno_data <- map_data |> 
-  select(all_of(transmission_cols))#|> 
+  select(all_of(techno_cols))#|> 
   #rename("state" = map_data$state_names)
 
 transmission_data <- map_data |> 
@@ -108,19 +108,19 @@ state_colors <- c('#B3D1DC', '#67A2B9',
 env_ridge_data <- map_data %>%
   filter(!region == 'East South Central') # remove East South Central
 
-states_vec <- c('TX','WA', 'CA', 'OR','IL', 'WV', 'MI')
+states_vec <- c('Texas','Washinton', 'California', 'Oregon','Illinois', 'West Virginia', 'Michigan')
 
 rci_plot_data <- map_data |> 
   filter(energy_community == 1) |> 
-  mutate(state = as.factor(state)) |> 
-  filter(state %in% states_vec) 
+  mutate(state = as.factor(state_names)) |> 
+  filter(state_names %in% states_vec) 
 
 energy_comm_solar_cap <- map_data |> 
   filter(energy_community == 1) |> 
-  group_by(state) |> 
+  group_by(state_names) |> 
   summarize(total_slr_cpc = sum(slr_cpc, na.rm = TRUE)) |> 
-  arrange(total_slr_cpc) |> 
-  mutate(state = factor(state, levels = state)) 
+  mutate(state = factor(state_names, levels = state_names)) |>
+  arrange(desc(total_slr_cpc))
 
 
 ### static graphs of capacity and ratios

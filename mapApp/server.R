@@ -35,8 +35,8 @@ server <- function(input, output) {
       "</span><br>",
       
       "<span style='color: #787d87;'> <b>Location:</b> ", 
-      map_filter_df()$t_county, ",", 
-      map_filter_df()$t_state, 
+      map_filter_df()$county, ",", 
+      map_filter_df()$state_names, 
       "</span><br>",
       
       "<span style='color: #787d87;'><b>Environmental Sensitivity Score:</b> ", 
@@ -262,6 +262,7 @@ server <- function(input, output) {
       scale_x_continuous(breaks = seq(0, 150, 25)) +
       scale_discrete_manual(values = region_colors,
                             aesthetics = 'fill') +
+      theme_minimal() +
       theme(plot.title = element_text(hjust = 0.5),
             panel.background = element_rect(fill = "#F5F9FA" , 
                                             color = "#264653"),
@@ -276,24 +277,26 @@ server <- function(input, output) {
   
   
   # RCI of Energy Community PIDs by State
-  output$rci_plot <- renderPlot({
-    rci_plot_data |>   
-      ggplot(aes(x = rci, y = state, fill = state_names)) +
-      geom_density_ridges(alpha = 0.9) +
-      scale_x_continuous(breaks = seq(0, 100, 25)) +
-      scale_discrete_manual(values = state_colors, 
-                            aesthetics = 'fill') +
-      labs(x = "Rural Capacity Index",
-           y = NULL, 
-           fill = "State") +
-      theme_ridges() +
-      theme(plot.title = element_text(hjust = 0.5),
-            panel.background = element_rect(fill = "#F5F9FA" , 
-                                            color = "#264653"),
-            plot.background = element_rect(fill = "#F5F9FA",
-                                           color = NA))
-    
-  })
+ output$rci_plot <- renderPlot({
+  rci_plot_data |>   
+    ggplot(aes(x = rci, y = state_names, fill = state_names)) +
+    geom_density_ridges(alpha = 0.9) +
+    scale_x_continuous(breaks = seq(0, 100, 25)) +
+    scale_discrete_manual(values = state_colors, 
+                          aesthetics = 'fill') +
+    labs(x = "Rural Capacity Index",
+         y = NULL, 
+         fill = NULL) +
+    theme_ridges() +
+    theme(plot.title = element_text(hjust = 0.5),
+          panel.background = element_rect(fill = "#F5F9FA" , 
+                                          color = "#264653"),
+          plot.background = element_rect(fill = "#F5F9FA",
+                                         color = NA),
+          axis.title.x = element_text(hjust = 0.5)) +
+    guides(fill = "none")  # Remove the fill legend
+})
+
   
   
   
@@ -301,18 +304,19 @@ server <- function(input, output) {
   output$energy_comm_solar_cap <- renderPlot({
     
     energy_comm_solar_cap |>
-      ggplot(aes(x = state, 
+      mutate(state_names = reorder(state_names, total_slr_cpc)) |>
+      ggplot(aes(x = state_names, 
                  y = total_slr_cpc)) +
       geom_col(fill = '#264653') +
-      geom_text(aes(label = round(total_slr_cpc)), 
+      geom_text(aes(label = format(round(total_slr_cpc), 
+                                   big.mark = ",")), 
                 hjust = -0.2, vjust = 0.5, 
                 color = "#264653", 
                 size = 3) +
       theme_light() +
       coord_flip() +
-      labs(x = "US State",
-           y = "Total Solar Capacity (MW)",
-           title = "Solar Capacity for Sites that Fall in\n Counties in with Eligible Census Tracts") +
+      labs(x = NULL,
+           y = "Total Solar Capacity (MW)") +
       theme(plot.title = element_text(hjust = 0.5),
             panel.background = element_rect(fill = "#F5F9FA" , 
                                             color = "#264653"),
@@ -328,7 +332,7 @@ server <- function(input, output) {
       "<div line-height: 1.7;'>",
       
       "<span style='color: #787d87;'> <b>State:</b> ", 
-      us_states_regions$name,
+      us_states_regions$name.x,
       "</span><br>",
       
       "<span style='color: #787d87;'> <b>Average Ratio:</b> ", 
@@ -342,8 +346,9 @@ server <- function(input, output) {
     
     # Create a color palette for the continuous fill
     color_palette <- colorNumeric(
-      palette = "Blues",  # Choose a color palette (e.g., "Blues")
-      domain = us_states_regions$avg_slr_wn  # Specify the range of ratio values
+      palette = "Blues",
+      domain = us_states_regions$avg_slr_wn,  
+      na.color = "#E9E9E9"
     )
     
     # Create the Leaflet plot with continuous fill
@@ -354,15 +359,15 @@ server <- function(input, output) {
         fillColor = ~color_palette(avg_slr_wn),  # Fill polygons based on ratio using color_palette
         color = "white",  # Border color of polygons
         weight = 1,  # Border weight of polygons
-        fillOpacity = 0.7,  # Fill opacity of polygons
-        popup = ~paste("State: ", name.x, "<br>Average Ratio: ", avg_slr_wn)
+        fillOpacity = 1,  
+        popup = popup_content
       ) |> 
       addLegend(
         "bottomright",  # Position of the legend on the map
         pal = color_palette,  # Color palette
-        values = us_states_regions$avg_slr_wn,  # Values corresponding to the color palette
-        title = "Solar to Wind Ratio",  # Title of the legend
-        opacity = 1  # Opacity of the legend
+        values = us_states_regions$avg_slr_wn,  
+        title = "Solar to Wind Ratio",  
+        opacity = 1
       )
     
   })
@@ -388,25 +393,25 @@ server <- function(input, output) {
     color_palette <- colorNumeric(
       palette = "Oranges",  # Choose a color palette (e.g., "Blues")
       domain = us_states_regions$total_solar,
-      na.color = "white"
+      na.color = "#E9E9E9"
     )
     
     # Create the Leaflet plot with continuous fill
-    leaflet() %>%
-      addProviderTiles(providers$CartoDB.Positron) %>%
+    leaflet() |> 
+      addProviderTiles(providers$CartoDB.Positron) |> 
       addPolygons(
         data = us_states_regions,
         fillColor = ~color_palette(total_solar),  # Fill polygons based on ratio using color_palette
         color = "gray",  # Border color of polygons
         weight = 1,  # Border weight of polygons
-        fillOpacity = 0.7,  # Fill opacity of polygons
-        popup = ~paste("State: ", name.x, "<br>Total Solar Capacity: ", round(total_solar))
+        fillOpacity = 1,  # Fill opacity of polygons
+        popup = ~paste("State: ", name.x, "<br>Total Solar Capacity: ", format(round(total_solar), big.mark = ","), "MW")
       ) |> 
       addLegend(
         "bottomright",  # Position of the legend on the map
         pal = color_palette,  # Color palette
         values = us_states_regions$total_solar,  # Values corresponding to the color palette
-        title = "Total Solar Capacity",  # Title of the legend
+        title = "Total Solar Capacity (MW)",  # Title of the legend
         opacity = 1  # Opacity of the legend
       )
     

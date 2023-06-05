@@ -22,13 +22,13 @@ ui <- fluidPage(
     }
   ")),
   
-  # establishing a divider main
+  # establishing a dotted blue divider
   tags$style(HTML("
-    .divider-main {
-      border-top: 4px solid #264653; 
-      margin: 20px 0;
-    }
-  ")),
+  .divider-main {
+    border-top: 3px dotted #E76F51; 
+    margin: 20px 0;
+  }
+")),
   
   # establishing the slider theme
   chooseSliderSkin(
@@ -139,7 +139,7 @@ ui <- fluidPage(
                         # adding gap
                         div(class = "gap"),
                         
-                        tags$body(HTML("<b>Dr. Grace C. Wu</b> is an Assistant Professor in the Environmental Studies Program at UC Santa Barbara. Before joining UCSB, Grace was a Smith Conservation Fellow at The Nature Conservancy and the National Center for Ecological Analysis and Synthesis. She was also a UC President’s Postdoctoral Fellow at the John Muir Institute of the Environment at UC Davis. She was trained in systems thinking and interdisciplinary approaches in the Energy and Resources Group at UC Berkeley.")),
+                        tags$body(HTML("<b>Dr. Grace C. Wu</b> is an Assistant Professor in the Environmental Studies Program at UC Santa Barbara. Before joining UCSB, Grace was a Smith Conservation Fellow at The Nature Conservancy and the National Center for Ecological Analysis and Synthesis. She was also a UC President’s Postdoctoral Fellow at the John Muir Institute of the Environment at UC Davis. She was trained in systems thinking and interdisciplinary approaches in the Energy and Resources Group at UC Berkeley. Grace is interested in the dynamics and drivers of land use change, climate change mitigation, and advancing our ability to plan for sustainable, multi-use landscapes that protect biodiversity and advance climate goals. She uses spatial science approaches to identify and understand the co-benefits and trade-offs between climate solutions and habitat conservation. Her current main research areas are (1) sustainable spatial planning of low carbon energy systems; and (2) designing policy, management, and technology pathways to sustainable land systems.")),
                         
                         # adding gap
                         div(class = "gap"),
@@ -220,11 +220,17 @@ ui <- fluidPage(
                         # adding gap
                         div(class = "gap"),
                         
-                        actionButton(
-                          inputId = "button",
-                          label = span(
-                            class = "fa fa-github",
-                            "Github"
+                        div(
+                          style = "text-align: right;",
+                          a(
+                            href = "https://github.com/wattmaps",
+                            target = "_blank",
+                            actionButton(
+                              inputId = "button",
+                              label = span(
+                                class = "fa fa-github"
+                              )
+                            )
                           )
                         ),
                         
@@ -267,8 +273,13 @@ ui <- fluidPage(
                  column(10,
                         
                         # title
-                        tags$h3("Results",
+                        tags$h3("Findings & Results",
                                 style = "text-align: center;"),
+                        
+                        # adding gap
+                        div(class = "gap"),
+                        
+                        tags$body("This study reports four important findings of retrofitting existing wind projects with solar PV in the contiguous U.S.: (1) additional potential solar energy, (2) combined annual revenue and additional profit, (3) the optimal ratio of solar PV to wind, and (4) multi-criteria techno-economic analysis. This study reports findings for the subsample of 1,288 existing wind projects viable to be retrofitted with solar PV and defines viability as existing wind projects that have an estimated solar capacity greater than zero."),
                         
                         # adding gap
                         div(class = "gap"),
@@ -311,8 +322,12 @@ tabsetPanel(
                     # adding gap
                     div(class = "gap"),
                     
-                    # Add the divider line
-                    #tags$hr(class = "divider-main"),
+                    tags$h3("Total Solar Capacity",
+                            style = "text-align: center;"),
+                    
+                    tags$body("This study finds an estimated 115 GW of potential solar energy across all viable existing wind projects. This addition of potential solar energy represents the opportunity to nearly double capacity at existing wind projects while avoiding the development of new transmission infrastructure. Retrofitting existing wind projects with solar PV is also estimated to deliver over 11 billion USD in additional profit from solar energy production and 30 billion USD in annual combined revenue with wind energy production."),
+                    
+
                     
                     # adding gap
                     div(class = "gap"))
@@ -326,24 +341,19 @@ tabsetPanel(
              # column within tabPanel
              column(4, 
                     
-                    # title
-                    tags$h4("Total Solar Potential for Retrofitting Exisiting Wind", 
-                            style = "text-align: center;"),
-                    
-                    
-                    
+
                     # total capacity graphic
                     tags$img(src = "images/total_solar_cpc.jpg", 
-                             alt = "116 GW potential solar",
+                             alt = "115 GW potential solar",
                              style = "max-width: 100%; overflow: hidden;"),
                     
              ),
              
              # column 2 - by state plot
-             column(6, 
+             column(8, 
                     
                     # plot title and centering
-                    tags$h4("Total Solar Capacity By State (MW)", 
+                    tags$h4("Total Solar Capacity By State", 
                             style = "text-align: center;"),
                     
                     # adding gap
@@ -367,16 +377,7 @@ tabsetPanel(
                     # adding gap
                     div(class = "gap"),
                     
-                    # # plot title and centering
-                    # tags$h4("Total Solar Capacity By State (MW)", 
-                    #         style = "text-align: center;"),
-                    # 
-                    # # adding gap
-                    # div(class = "gap"),
-                    # 
-                    # # plot avg ratio per state
-                    # leafletOutput(outputId = "state_cap", 
-                    #               height = "350px")
+                    
              ),
              
              column(1)
@@ -394,24 +395,48 @@ tabsetPanel(
            
            fluidRow(
              
+
+             column(12, 
+                    
+                    # adding gap
+                    div(class = "gap"),
+                    
+                    tags$h3("Solar to Wind Ratios",
+                            style = "text-align: center;"),
+                    
+                    # adding gap
+                    div(class = "gap"),
+                    
+                    tags$body("This study identifies an average optimal ratio of solar PV to wind of 1.01 for all viable existing wind projects, ceteris paribus. The optimal ratio suggests that, on average, for every 1.00 unit of wind, 1.01 units of solar may be added to the project to maximize profit, ceteris paribus. While the distribution of optimal ratios ranges from zero to 1.50, most existing wind projects have a ratio of solar PV to wind greater than 0.70. We thus can point to co-location of solar PV and wind at viable existing wind projects may be a ‘low-hanging fruit’ pathway towards reaching clean electricity goals in the U.S."),
+                    
+                    # adding gap
+                    div(class = "gap")
+                    
+                    
+                    ),
+             
+             
+           ),
+           
+           fluidRow(
+             
              # start column 1 ratio
              column(5, 
                     
-                    tags$h4("Average Solar to Wind Ratio for Viable Sites", 
-                            style = "text-align: center;"),
                     
                     # average ratio graphic
                     tags$img(src = "images/avg_ratio_graphic.jpg", 
                              alt = "1.01 solar to 1 wind",
                              style = "max-width: 100%; overflow: hidden;"),
                     
-                    tags$h6("*Caclulated for sites with a solar capacity greater than 0 GW", 
-                            style = "text-align: right;")
+                    tags$h5("Average solar to wind ratio for viable sites"),
+                    
+                    tags$h6("*Caclulated for sites with a solar capacity greater than 0 GW")
                     
              ), # end column 1 ratio
              
              # start column 2 ratio
-             column(5, 
+             column(7, 
                     
                     # plot title and centering
                     tags$h4("Distribution of Ratios", 
@@ -428,15 +453,14 @@ tabsetPanel(
            
            fluidRow(
              
-             column(1),
-             
-             column(10, 
+
+             column(12, 
                     
                     # adding gap
                     div(class = "gap"),
                     
                     # plot title and centering
-                    tags$h4("Average Ratio Per State", 
+                    tags$h4("Average Ratio By State", 
                             style = "text-align: center;"),
                     
                     # adding gap
@@ -445,9 +469,7 @@ tabsetPanel(
                     # plot avg ratio per state
                     leafletOutput(outputId = "state_ratio", 
                                   height = "350px")
-                    ),
-             
-             column(1)
+                    )
              
            )
            
@@ -465,7 +487,7 @@ tabsetPanel(
              # start timeseries column
              column(12,
                     
-                    tags$h4("Wind and Solar Complementary Capacity Factors",
+                    tags$h4("Wind and Solar Complementarity Capacity Factors Example",
                             style = "text-align: center;"),
                     # adding gap
                     div(class = "gap"),
@@ -515,58 +537,9 @@ tabsetPanel(
            
   ), # end tabsetPanel 3
   
-  # start tabsetPanel 4 ----
-  tabPanel(title = "Equitable Investment",
-           
-           # adding divider line
-           tags$hr(class = "divider"),
-           
-           # start fluidRow 1
-           fluidRow(
-             
-             # start timeseries column
-             column(12,
-                    
-                    tags$h4("Total Solar Potential for Retrofitting Exisiting Wind", 
-                            style = "text-align: center;"),
-                    
-                    # adding gap
-                    div(class = "gap"),
-                    
-                    tags$body("This study also evaluated equitable investment in renewable energy deployment using DOE census tract-level data on disadvantaged indices and DAC status. The DOE uses fossil dependence, energy burden, environmental and climate hazard, and sociodemographic data at the census tract-level to assess for DAC status. Spatial aggregation of the data products was conducted to contextualize the energy injustice landscape of existing wind projects."),
-                    
-                    # adding gap
-                    div(class = "gap"),
-                    
-             ) # end timeseries column
-             
-             
-           ), # end of fluid Row 1
-           
-           # start fluidRow 2
-           fluidRow(
-             
-             column(1), # left padding
-             
-             # start slider column
-             column(5
-             ), # end slider column
-             
-             # start text column
-             column(5, 
-                    
-                    
-             ), # end text column
-             
-             column(1) # right padding
-             
-             
-           ) # end of fluid Row 1
-           
-  ), # end tabsetPanel 4
   
-  # start tabsetPanel 5 ----
-  tabPanel(title = "Incentive Eligibility",
+  # start tabsetPanel 4 ----
+  tabPanel(title = "Economic Development",
            
            # adding divider line
            tags$hr(class = "divider"),
@@ -574,22 +547,24 @@ tabsetPanel(
            # start fluidRow 1
            fluidRow(
              
-             # start timeseries column
+             # start IRA column
              column(12,
                     
-                    tags$h4("Potential Federal Incentive Eligibility for Adding Solar PV", 
+                    tags$h3("Potential Federal IRA Tax Incentive Eligibility for Adding Solar PV", 
                             style = "text-align: center;"),
                     
                     # adding gap
                     div(class = "gap"),
                     
-                   tags$body("This study finds that around 12 percent of viable existing wind projects are sited within counties with IRA energy communities and account for over 13,900 MW of potential solar capacity. This suggests that around 12 percent of viable existing wind projects may receive a 10 percent increase in federal tax benefits. However, viable existing wind projects in energy communities also operate, on average, at near 76 percent capacity to apply for them."),
+                   tags$body("This study finds that around 12 percent of viable existing wind projects are sited within counties with IRA energy communities and account for over 13,900 MW of potential solar capacity. This suggests that around 12 percent of viable existing wind projects may receive a 10 percent increase in federal tax benefits. 
+                             
+                             However, viable existing wind projects in energy communities also operate, on average, at near 76 percent capacity to apply for them from the Rural Capacity Index. The Rural Capacity Index from Headwaters Economics identifies communities with limited capacity needed to apply for federal programs on a scale of 0 (low capacity) to 100 (high capacity); data as of 2022."),
                    
                    # adding gap
                    div(class = "gap"),
                     
                     
-             ) # end timeseries column
+             ) # end IRA column
              
              
            ), # end of fluid Row 1
@@ -602,12 +577,18 @@ tabsetPanel(
              # start slider column
              column(5,
                     
+                    tags$h4("Solar Capacity for Sites that Fall in\n Counties with Eligible Census Tracts by State",
+                             style = "text-align: center;"),
+                    
                     plotOutput("energy_comm_solar_cap")
                     
              ), # end slider column
              
              # start text column
              column(5, 
+                    
+                    tags$h4("Rural Capacity Index for Top States", 
+                            style = "text-align: center;"),
                     
                     plotOutput("rci_plot")
                     
@@ -617,11 +598,38 @@ tabsetPanel(
              column(1) # right padding
              
              
-           ) # end of fluid Row 1
+           ), # end of fluid Row 2
            
-  ), # end tabsetPanel 5
+           fluidRow(
+             
+             # adding gap
+             div(class = "gap"),
+             
+             # adding gap
+             div(class = "gap"),
+             
+             # adding divider line
+             tags$hr(class = "divider-main"),
+             
+             # adding gap
+             div(class = "gap"),
+             
+             # adding gap
+             div(class = "gap"),
+             
+             tags$h3("Equitable Investment for Retrofitting Existing Wind Projects", 
+                            style = "text-align: center;"),
+             
+             # adding gap
+             div(class = "gap"),
+             
+             tags$body("The study evaluated equitable investment in renewable energy deployment using DOE census tract-level data on disadvantaged indices and DAC status. The DOE uses fossil dependence, energy burden, environmental and climate hazard, and sociodemographic data at the census tract-level to assess for DAC status. Spatial aggregation of the data products was conducted to contextualize the energy injustice landscape of existing wind projects. Less than 3 percent of viable existing wind projects are within counties with census tracts of DAC status. This percentage of existing wind projects is low likely due to systemic biases and rural-urban and racial disparities that influenced the siting of existing wind projects (Ross et al., 2022).")
+             
+           ) # start of fluid Row 3
+           
+  ), # end tabsetPanel 4
   
-  # start tabsetPanel 6 ----
+  # start tabsetPanel 5 ----
   tabPanel(title = "Environmental Impact",
            
            # adding divider line
@@ -630,11 +638,32 @@ tabsetPanel(
            # start fluidRow 1
            fluidRow(
              
-             # start timeseries column
+             
+             
+             # start env. results column
              column(12,
-                    plotOutput("env_score_ridge")
                     
-             ) # end timeseries column
+                    tags$h3("Environmental Impact Scores for Solar PV Deployment",
+                            style = "text-align: center;"),
+                    
+                    # adding gap
+                    div(class = "gap"),
+                    
+                    tags$body("This study couples these nonlinear optimization model findings with a multi-criteria techno-economic analysis for environmental impact*. Overall, there is an average environmental impact score of 7.80 across all viable existing wind projects and a weighted average environmental impact score of 6.61 by potential solar capacity. These estimates suggest that retrofitting viable existing wind projects with solar PV has minimal direct environmental impact and may make use of environmental and physical sunk costs already incurred by projects, like fencing, auxiliary, roads infrastructure, and transmission infrastructure."),
+                    
+                    # adding gap
+                    div(class = "gap"),
+                    
+                    tags$body("The plot below outlines the distribution of environmental impact scores by region."),
+                    
+                    # adding gap
+                    div(class = "gap"),
+                    
+                    plotOutput("env_score_ridge"),
+                    
+                    tags$h6("*This study used environmental impact scores from the Power of Place study by The Nature Conservancy to evaluate the environmental sensitivity of solar PV deployment within existing wind projects. The scores are high-level estimates of spatially-specific environmental positives and negatives, where larger raster values indicate higher negative impacts, lower raster values indicate lower negative impacts. The environmental impact index consists of data falling into the following categories:  wetland, managed areas, threatened and endangered species habitat, intact habitat, and local bird and bat habitats.")
+                    
+             ) # end env. results column
              
              
            ), # end of fluid Row 1
@@ -659,7 +688,8 @@ tabsetPanel(
              
            ) # end of fluid Row 1
            
-  ) # end tabsetPanel 6
+  ), # end tabsetPanel 5
+  
   
 ) # END tabsetPanel
 
@@ -702,9 +732,7 @@ fluidRow(
          
          # adding gap
          div(class = "gap"),
-         
-         # Add the divider line
-         tags$hr(class = "divider-main"),
+        
          
          # adding gap
          div(class = "gap"),
@@ -900,7 +928,7 @@ tabPanel(title =  "Explore the Data",
                     div(class = "gap"),
                     
                     # page description
-                    tags$body("Available data includes: energy attributes containing the optimization results of energy capacity, solar ratios and monetary estimates, spatial attributes housing information whether the projects fall within different techno-economic criteria and envrionmental impact scores, transmission attributes showcasing information about nearby transmission infastructure, location attributions containing latitude and longitude, and metadata."),
+                    tags$body("Available data includes: energy attributes containing the optimization results of energy capacity, solar ratios and monetary estimates; techno-economic attributes with information whether the projects fall within different techno-economic criteria and envrionmental impact scores; transmission attributes showcasing information about nearby transmission infastructure; location attributions containing latitude and longitude; all data combined and metadata."),
                     
                     # adding gap
                     div(class = "gap"),
@@ -922,9 +950,10 @@ tabPanel(title =  "Explore the Data",
              column(2, 
                     selectInput("dataset", "Choose a dataset:",
                                 choices = c("energy attributes", 
-                                            "spatial attributes",
+                                            "techno-economic attributes",
                                             "transmission attributes",
                                             "location attributes",
+                                            "all data",
                                             "metadata")),
                     
                     # Button
