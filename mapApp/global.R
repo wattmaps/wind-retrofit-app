@@ -112,8 +112,9 @@ states_vec <- c('Texas','Washinton', 'California', 'Oregon','Illinois', 'West Vi
 
 rci_plot_data <- map_data |> 
   filter(energy_community == 1) |> 
-  mutate(state = as.factor(state_names)) |> 
-  filter(state_names %in% states_vec) 
+  mutate(region = as.factor(region)) |> 
+  filter(region != "East South Central")
+
 
 energy_comm_solar_cap <- map_data |> 
   filter(energy_community == 1) |> 

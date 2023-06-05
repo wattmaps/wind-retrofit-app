@@ -279,10 +279,10 @@ server <- function(input, output) {
   # RCI of Energy Community PIDs by State
  output$rci_plot <- renderPlot({
   rci_plot_data |>   
-    ggplot(aes(x = rci, y = state_names, fill = state_names)) +
+    ggplot(aes(x = rci, y = region, fill = region)) +
     geom_density_ridges(alpha = 0.9) +
     scale_x_continuous(breaks = seq(0, 100, 25)) +
-    scale_discrete_manual(values = state_colors, 
+    scale_discrete_manual(values = region_colors, 
                           aesthetics = 'fill') +
     labs(x = "Rural Capacity Index",
          y = NULL, 

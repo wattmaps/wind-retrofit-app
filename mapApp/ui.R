@@ -587,7 +587,7 @@ tabsetPanel(
              # start text column
              column(5, 
                     
-                    tags$h4("Rural Capacity Index for Top States", 
+                    tags$h4("Rural Capacity Index Distribution by Region", 
                             style = "text-align: center;"),
                     
                     plotOutput("rci_plot")
