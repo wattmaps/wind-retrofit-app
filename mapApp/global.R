@@ -33,6 +33,7 @@ sass(
 
 # data for the map
 map_data <- read_csv("data/wattmaps_dat_1288_final.csv")
+meta_data <- read_csv("data/wattmaps_meta.csv")
 abrrev <- state.abb
 names <- state.name
 state_names <- data.frame(state = abrrev, state_names = names)
@@ -93,8 +94,7 @@ location_data <- map_data |>
   #rename("state" = "state_names")
 
 # placeholder for metadata
-metadata <- map_data |> 
-  select("pid")
+metadata <- meta_data
 
 # storing colors for the ridge plot
 region_colors <- c('#B3D1DC', '#67A2B9', '#5496B1', '#4987A0', 

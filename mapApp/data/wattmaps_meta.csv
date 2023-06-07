@@ -1,0 +1,30 @@
+Variable,Short Variable Name,Definition,Source
+Project name,p_name,Name of existing wind project ,U.S. Wind Turbine Database
+Project year,p_year,Permit year of existing wind project,U.S. Wind Turbine Database
+Wind turbine capacity,t_cap,Individual capacity of most frequent wind turbine,U.S. Wind Turbine Database
+Wind turbine count,t_count,Number of wind turbines,U.S. Wind Turbine Database
+Solar capacity,slr_cpc,Potential installed capacity of solar PV,Computed
+Wind capacity,wnd_cpc,Potential installed capacity of wind,Computed
+Solar to wind ratio,slr_wn,Optimal solar capacity to wind capacity ,Computed
+Transmisison capacity,tx_cpct,Potential installed capacity of transmission infrastructure,Computed
+Annual revenue,revenue,Optimal annual revenue at project in USD,Computed
+Annual cost,cost,Optimal annual cost at project in USD,Computed
+Annual profit,profit,Optimal annual profit at project in USD,Computed
+County FIPS code,fips,Federal Information Processing Series county code,U.S. Census
+County,county,U.S. county of exisiting wind project,U.S. Census
+State,state,U.S. state of exisiting wind project,U.S. Census
+Region,region,U.S. region of exisiting wind project,U.S. Census
+Environmental impact score,env_sens_score,High-level environmental impact score estimate of solar PV,Power of Place - National
+Disadvantaged community status,dac_sts,"Binary value, equals one if a census tract in the county is considered disadvantaged for Justice 40 Iniative and zero otherwise",Department of Energy
+Energy burden,energy_brdn,Annual average energy burden based on average annual housing energy costs divided by the average annual household income ,Department of Energy
+Fossil energy employment,foss_emplmt,Percent of total civilian jobs in the fossil energy sector ,Department of Energy
+Coal employment,coal_emplmt,Percent of total civilian jobs in the coal sector ,Department of Energy
+Outage events,outage_n,Number of power outage events that occurred for all census tracts in each county from 2017-2020 ,Department of Energy
+Outage duration,outage_dur,Average duration of power outage events (in minutes) that occurred for all census tracts in each county from 2017-2020 ,Department of Energy
+Rural capacity index score,rci,Continuous score on scale of 0 (low capacity) to 100 (high capacity) for level of staffing and resources in the local governmentcore on scale of 0 (low capacity) to 100 (high capacity) for level of staffing and resources in the local government,"Rural Capacity Index, Headwater Economics"
+Energy community status,energy_community,"Binary value, equals one if a census tract in the county is considered an energy community for the Inflation Reduction Act and zero otherwise",Resources for the Future
+Substation maximum voltage,max_volt,Maximum voltage of nearest substation,Homeland Infrastructure Foundation-Level Data  
+Substation minimum voltage,min_volt,Minimum voltage of nearest substation,Homeland Infrastructure Foundation-Level Data  
+Substation distance,distance_km,Distance from project to nearest susbtation in kilometer,Homeland Infrastructure Foundation-Level Data  
+Longitude,lon,Longitude of USWTDB project centroid,Computed
+Latitude,lat,Latitude of USWTDB project centroid,Computed

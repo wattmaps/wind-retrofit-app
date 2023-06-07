@@ -216,10 +216,11 @@ ui <- fluidPage(
                  column(1),
                  
                  column(10, 
-                        # Define the GitHub button using custom HTML code
+                        
                         # adding gap
                         div(class = "gap"),
                         
+                        # github button
                         div(
                           style = "text-align: right;",
                           a(
@@ -491,11 +492,16 @@ tabsetPanel(
                             style = "text-align: center;"),
                     # adding gap
                     div(class = "gap"),
+                    
+                    tags$body("This graph showcases wind and solar capacity factors for 2012 for Neosho Ridge wind project in Neosho County, Kansas. The ratio for solar to wind is 1.17 with an estimated annual solar capacity of 357 MW and wind capacity of 305 MW. Change the day of the year with the slide option below."),
+                    # adding gap
+                    div(class = "gap"),
                     # calling the distribution
                     plotOutput("cp_time_series")
                     
-             ) # end timeseries column
+             ), # end timeseries column
              
+
              
            ), # end of fluid Row 1
            
@@ -526,14 +532,27 @@ tabsetPanel(
                     # adding gap
                     div(class = "gap"),
                     
-                    tags$body("This graph showcases wind and solar capacity factors for 2012 for Neosho Ridge wind project in Neosho County, Kansas. The ratio for solar to wind is 1.17 with an estimated annual solar capacity of 357 MW and wind capacity of 305 MW.")
-                    
+                    # legend image
+                    tags$img(src = "images/solar_wind_complementarity_legend.jpg", 
+                             alt = "yellow solar, blue wind",
+                             style = "max-width: 60%; overflow: hidden;"),
+
              ), # end text column
              
              column(1) # right padding
              
              
-           ) # end of fluid Row 1
+           ), # end of fluid Row 2
+           
+           # start fluid row 3 - graph description
+           fluidRow(
+             
+             # adding gap
+             div(class = "gap"),
+             
+             
+            
+             ) # end fluid row 3 - graph description
            
   ), # end tabsetPanel 3
   
@@ -691,7 +710,29 @@ tabsetPanel(
   ), # end tabsetPanel 5
   
   
-) # END tabsetPanel
+), # END tabsetPanel
+
+fluidRow(
+  
+  # adding gap
+  div(class = "gap"),
+  
+  # github button
+  div(
+    style = "text-align: right;",
+    a(
+      href = "https://github.com/wattmaps",
+      target = "_blank",
+      actionButton(
+        inputId = "button",
+        label = span(
+          class = "fa fa-github"
+        )
+      )
+    )
+  ),
+  
+)
 
                  ), # END (Page 2) data viz tabPanel
 
@@ -864,8 +905,7 @@ tabPanel(title =  "Explore the Map",
                     # start solar cap. slider
                     sliderInput(inputId = "slr_input",
                                 label = "Filter by Solar Capacity (MW):",
-                                min = min(map_data$slr_cpc, 
-                                          na.rm = TRUE), 
+                                min = 0, 
                                 max = round(max(map_data$slr_cpc,
                                                 na.rm = TRUE))+1, 
                                 value = c(0,round(max(map_data$slr_cpc,
@@ -893,8 +933,37 @@ tabPanel(title =  "Explore the Map",
              
              column(1), # column 3 - right padding
              
-           )
+           ),
            # END row 2 - map text 
+           
+           # github button row
+           fluidRow(
+             
+             # adding gap
+             div(class = "gap"),
+             
+             # github button
+             div(
+               style = "text-align: right;",
+               a(
+                 href = "https://github.com/wattmaps",
+                 target = "_blank",
+                 actionButton(
+                   inputId = "button",
+                   label = span(
+                     class = "fa fa-github"
+                   )
+                 )
+               )
+             ),
+             
+             # adding gap
+             div(class = "gap"),
+             
+             # adding gap
+             div(class = "gap")
+             
+           )
            
          ) # END fluid page - maps
          
@@ -981,8 +1050,37 @@ tabPanel(title =  "Explore the Data",
              # ENDS row 2 - column 4 - padding
              
              
-           )
+           ),
            # END row 2 - map text 
+           
+           # github button row
+           fluidRow(
+             
+             # adding gap
+             div(class = "gap"),
+             
+             # github button
+             div(
+               style = "text-align: right;",
+               a(
+                 href = "https://github.com/wattmaps",
+                 target = "_blank",
+                 actionButton(
+                   inputId = "button",
+                   label = span(
+                     class = "fa fa-github"
+                   )
+                 )
+               )
+             ),
+             
+             # adding gap
+             div(class = "gap"), 
+             
+             # adding gap
+             div(class = "gap")
+             
+           )
            
          ),
          # END fluid page
@@ -994,7 +1092,7 @@ tabPanel(title =  "Explore the Data",
 
 
 ### --------------------
-### Page 2 About App ---
+### Page 5 Methods & Assumptions
 ### --------------------
 
 # (Page 2) how to tabPanel
@@ -1077,8 +1175,34 @@ tabPanel(title = "Methods & Sources",
              
              column(1) # right padding
              
-           )
+           ),
            # end row 3 - methods & assumptions
+           
+           # github button row
+           fluidRow(
+             
+             # adding gap
+             div(class = "gap"),
+             
+             # github button
+             div(
+               style = "text-align: right;",
+               a(
+                 href = "https://github.com/wattmaps",
+                 target = "_blank",
+                 actionButton(
+                   inputId = "button",
+                   label = span(
+                     class = "fa fa-github"
+                   )
+                 )
+               )
+             ),
+             
+             # adding gap
+             div(class = "gap")
+             
+           )
            
          ) # END fluid page - about
          
