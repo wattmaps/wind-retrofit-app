@@ -1,6 +1,20 @@
 # user interface ----
 ui <- fluidPage(
   
+  tags$head(
+    tags$script(
+      HTML("
+      $(document).ready(function() {
+        document.title = 'Co-location App';
+      });
+    ")
+    )
+  ),
+  
+  tags$head(
+    tags$link(rel = "shortcut icon", type = "image/x-icon", href = "favicon.png")
+  ),
+  
   # adding css sytle file ----
   header = tags$head(
     tags$link(rel = "stylesheet", 
@@ -813,8 +827,8 @@ tabPanel(title =  "Explore the Map",
                     tags$h3("Map of Existing Wind Projects for Potential Solar PV Retrofit", 
                             style = "text-align: center;"),
                     
-                    tags$body("Click on the icons to see project details and potential capacity and filter by state, solar capacity and more with the options below the map. "),
-                    
+                    tags$body("Click on the icons to see project details and potential capacity and filter by state, solar capacity and more with the options below the map. The following map outlines the results of the  nonlinear optimization model solving for the optimal solar PV to wind technology ratio at each existing wind project that maximizes the annual profit subject to the estimated generation, annual costs, and transmission line capacity of each viable project. The pop-up information showcases the optimization result for each existing wind project."),
+                
                     # adding gap
                     div(class = "gap"),
              ),
@@ -834,6 +848,7 @@ tabPanel(title =  "Explore the Map",
              column(10, 
                     
                     # adding the leaflet output
+
                     
                     
                     leafletOutput(outputId = "test_map", 
@@ -917,7 +932,7 @@ tabPanel(title =  "Explore the Map",
              # START row 3 - column 4 - techno-econ filter
              column(3, 
                     
-                    tags$h5("Filter by Project Attribute:"),
+                    tags$h5("Filter for Additional Economic Development:"),
                     
                     # start energy community switch
                     prettySwitch(
@@ -1168,7 +1183,11 @@ tabPanel(title = "Methods & Sources",
                     div(class = "gap"),
                     
                     # assumptions text
-                    includeMarkdown("text/assumptions.md")
+                    includeMarkdown("text/assumptions.md"),
+                    
+                    tags$img(src = "images/optimization_assumptions.jpg", 
+                             alt = "wind and solar",
+                             style = "max-width: 90%;  overflow: hidden; padding-top: 16px;") 
                     
                     ),
              # end column assumptions
