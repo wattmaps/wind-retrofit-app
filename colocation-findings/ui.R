@@ -1,6 +1,7 @@
 # user interface ----
 ui <- fluidPage(
   
+  # tab title
   tags$head(
     tags$script(
       HTML("
@@ -11,10 +12,10 @@ ui <- fluidPage(
     )
   ),
   
-  tags$head(
-    tags$link(rel = "shortcut icon", type = "image/x-icon", href = "favicon.png")
-  ),
+  # favicon tab icon
+  tags$head(tags$link(rel="icon", href = "www/favicon.ico")),
   
+
   # adding css sytle file ----
   header = tags$head(
     tags$link(rel = "stylesheet", 
@@ -337,7 +338,7 @@ tabsetPanel(
                     # adding gap
                     div(class = "gap"),
                     
-                    tags$h3("Total Solar Capacity",
+                    tags$h3("Total Solar Capacity for  Retrofitting Existing Wind Projects",
                             style = "text-align: center;"),
                     
                     tags$body("This study finds an estimated 115 GW of potential solar energy across all viable existing wind projects. This addition of potential solar energy represents the opportunity to nearly double capacity at existing wind projects while avoiding the development of new transmission infrastructure. Retrofitting existing wind projects with solar PV is also estimated to deliver over 11 billion USD in additional profit from solar energy production and 30 billion USD in annual combined revenue with wind energy production."),
@@ -403,7 +404,7 @@ tabsetPanel(
   ), # end tabsetPanel graph 1
   
   # start tabsetPanel graph 2 ----
-  tabPanel(title = "Solar to Wind Ratios",
+  tabPanel(title = "Solar to Wind Ratios for Retrofitting Existing Wind Projects",
            
            # adding divider line
            tags$hr(class = "divider"),
@@ -422,7 +423,7 @@ tabsetPanel(
                     # adding gap
                     div(class = "gap"),
                     
-                    tags$body("This study identifies an average optimal ratio of solar PV to wind of 1.01 for all viable existing wind projects, ceteris paribus. The optimal ratio suggests that, on average, for every 1.00 unit of wind, 1.01 units of solar may be added to the project to maximize profit, ceteris paribus. While the distribution of optimal ratios ranges from zero to 1.50, most existing wind projects have a ratio of solar PV to wind greater than 0.70. We thus can point to co-location of solar PV and wind at viable existing wind projects may be a ‘low-hanging fruit’ pathway towards reaching clean electricity goals in the U.S."),
+                    tags$body("This study identifies an average optimal ratio of solar PV to wind of 1.01 for all viable existing wind projects, ceteris paribus. The optimal ratio suggests that, on average, for every 1.00 unit of wind capacity, 1.01 units of solar capacity may be added to the project to maximize profit, ceteris paribus. While the distribution of optimal ratios ranges from zero to 1.50, most existing wind projects have a ratio of solar PV to wind greater than 0.70. We thus can point to co-location of solar PV and wind at viable existing wind projects may be a ‘low-hanging fruit’ pathway towards reaching clean electricity goals in the U.S."),
                     
                     # adding gap
                     div(class = "gap")
@@ -454,7 +455,7 @@ tabsetPanel(
              column(7, 
                     
                     # plot title and centering
-                    tags$h4("Distribution of Ratios", 
+                    tags$h4("Distribution of ratios Across All Viable Wind Projects in the US", 
                             style = "text-align: center;"),
                     
                     # calling the distribution
@@ -589,9 +590,9 @@ tabsetPanel(
                     # adding gap
                     div(class = "gap"),
                     
-                   tags$body("This study finds that around 12 percent of viable existing wind projects are sited within counties with IRA energy communities and account for over 13,900 MW of potential solar capacity. This suggests that around 12 percent of viable existing wind projects may receive a 10 percent increase in federal tax benefits. 
+                   tags$body("TThe Inflation Reduction Act defines energy communities as  brownfield sites, coal communities and areas with a specific combination of employment and local tax revenue related to the fossil fuel industry. This study finds that around 12 percent of viable existing wind projects are sited within counties with IRA energy communities. This suggests that around 12 percent of viable existing wind projects may receive a 10 percent increase in federal tax benefits. 
                              
-                             However, viable existing wind projects in energy communities also operate, on average, at near 76 percent capacity to apply for them from the Rural Capacity Index. The Rural Capacity Index from Headwaters Economics identifies communities with limited capacity needed to apply for federal programs on a scale of 0 (low capacity) to 100 (high capacity); data as of 2022."),
+                             However, viable existing wind projects in energy communities also operate, on average, at near 76 percent staffing and resource capacity (The Rural Capacity Index). The local governments of where these projects are sited may not have the staffing and resources to access these federal tax benefits."),
                    
                    # adding gap
                    div(class = "gap"),
@@ -656,7 +657,7 @@ tabsetPanel(
              # adding gap
              div(class = "gap"),
              
-             tags$body("The study evaluated equitable investment in renewable energy deployment using DOE census tract-level data on disadvantaged indices and DAC status. The DOE uses fossil dependence, energy burden, environmental and climate hazard, and sociodemographic data at the census tract-level to assess for DAC status. Spatial aggregation of the data products was conducted to contextualize the energy injustice landscape of existing wind projects. Less than 3 percent of viable existing wind projects are within counties with census tracts of DAC status. This percentage of existing wind projects is low likely due to systemic biases and rural-urban and racial disparities that influenced the siting of existing wind projects (Ross et al., 2022).")
+             tags$body("TThe study evaluated equitable investment in renewable energy deployment since renewable energy deployment tends to be lower in communities that require economic development and employment opportunities the most. The DOE uses fossil dependence, energy burden, environmental and climate hazard, and sociodemographic data at the census tract-level to assess for Disadvantaged Community status. This study finds that less than 3 percent of viable existing wind projects are within counties with Disadvantaged Community status. This percentage of viable existing wind projects is low likely due to the rural-urban and racial disparities of past siting that hinders equitable investment in the case of retrofitting (Ross et al., 2022).")
              
            ) # start of fluid Row 3
            
