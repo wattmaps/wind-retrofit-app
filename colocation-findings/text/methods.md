@@ -8,6 +8,6 @@ To achieve these objectives, we (i) created an abstract non-linear optimization 
 
 <br>
 
-Download the technical documentation outlining the process in detail [here](github.com/). All code is also publicly available on github at: [github.com/wattmaps](https://github.com/wattmaps). 
+Download the technical documentation outlining the process in detail [here](https://github.com/wattmaps/analysis/tree/main). All code is also publicly available on github at: [github.com/wattmaps](https://github.com/wattmaps). 
 
 <br>

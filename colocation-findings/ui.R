@@ -1,35 +1,39 @@
 # user interface ----
 ui <- fluidPage(
   
-  # tab title
+  ### -------------
+  # Webpage Set-Up
+  # ---------------
+  
+  # webpage tab title
   tags$head(
     tags$script(
       HTML("
       $(document).ready(function() {
-        document.title = 'Co-location App';
+        document.title = 'Co-location Findings';
       });
     ")
     )
   ),
   
-  # favicon tab icon
-  tags$head(tags$link(rel="icon", href = "www/favicon.ico")),
+  ### -------------
+  # Setting up HTML Tags
+  # ---------------
   
-
-  # adding css sytle file ----
+  # adding css style file to the UI to render custom CSS
   header = tags$head(
     tags$link(rel = "stylesheet", 
               type = "text/css", 
               href = "sass_styles.css")),
   
-  # establishing gap amount
+  # custom gap HTML tag
   tags$style(HTML("
     .gap {
       margin-top: 24px;
     }
   ")),
   
-  # establishing a divider
+  # custom divider HTML tag
   tags$style(HTML("
     .divider {
       border-top: 2px solid #b0bbbf; 
@@ -37,272 +41,280 @@ ui <- fluidPage(
     }
   ")),
   
-  # establishing a dotted blue divider
+  # custom dotted blue divider HTML tag
   tags$style(HTML("
   .divider-main {
     border-top: 3px dotted #E76F51; 
     margin: 20px 0;
   }
 ")),
+
+# customizing the slider theme
+chooseSliderSkin(
+  skin =  "Flat",
+  color = "#F4A261"
+),
+
+# enabling shiny java script integration
+useShinyjs(),
+
+######### ------------- ######
+####### WEBPAGE CONTENT ######
+######### ------------- ######
+
+#  adding title above navigation bar at top of page
+fluidRow(
+  column(
+    width = 12,
+    h2("Co-Locating a Power Couple", 
+       align = "center")
+  )
+), 
+
+
+### --------------------
+### Webpage Pages ----
+### --------------------  
+
+navbarPage(
   
-  # establishing the slider theme
-  chooseSliderSkin(
-    skin =  "Flat",
-    color = "#F4A261"
-  ),
+  # adding css style file ----
+  header = tags$head(
+    tags$link(rel = "stylesheet", 
+              type = "text/css", 
+              href = "sass_styles.css"),
+    tags$style(HTML(".navbar { height: 50px; }"))),
   
-  # Enable shinyjs
-  useShinyjs(),
-  
-  # Add title above navbar using fluidRow and column
-  fluidRow(
-    column(
-      width = 12,
-      h2("Co-Locating a Power Couple", 
-         align = "center")
-    )
-  ), 
+  title = NULL,
   
   ### --------------------
-  ### START Navbar Page ----
-  ### --------------------  
+  ### Page 1 Home Page --------
+  ### --------------------
   
-  navbarPage(
-    
-    # adding css style file ----
-    header = tags$head(
-      tags$link(rel = "stylesheet", 
-                type = "text/css", 
-                href = "sass_styles.css"),
-      tags$style(HTML(".navbar { height: 50px; }"))),
-    
-    title = NULL,
-    #collapsible = TRUE,
-    
-    #title = "Co-Locate App",
-    
-    ### --------------------
-    ### Page 1 Home --------
-    ### --------------------
-    
-    # (Page 1) home tabPanel
-    tabPanel(title = "Home",
+  # (Page 1) home tabPanel
+  tabPanel(title = "Home",
+           
+           # START fluid page - home
+           fluidPage(
              
-             # START fluid page - home
-             fluidPage(
+             # (Page 1) START row 1
+             fluidRow(
                
-               # START row 1
-               fluidRow(
-                 
-                 column(1), # left padding
-                 
-                 # row 1 column 2
-                 column(6,
-                        
-                        includeMarkdown("text/abstract.md")),
-                 
-                 # row 1 column 3
-                 column(4,
-                        
-                        tags$img(src = "images/wind_solar_square.jpg", 
-                                 alt = "wind and solar",
-                                 style = "max-width: 80%; border-radius: 50%; overflow: hidden; padding-top: 16px;") 
-                        
-                 ),
-                 
-                 
-                 column(1) # right padding
-                 
+               column(1), # left padding
+               
+               # row 1 column 2 - abstract text
+               column(6,
+                      
+                      includeMarkdown("text/abstract.md")),
+               
+               # row 1 column 3 - wind solar image
+               column(4,
+                      
+                      tags$img(src = "images/wind_solar_square.jpg", 
+                               alt = "wind and solar",
+                               style = "max-width: 80%; border-radius: 50%; overflow: hidden; padding-top: 16px;") 
+                      
                ),
-               # END row 1
                
-               # START row 2
-               fluidRow(
-                 
-                 column(1),
-                 
-                 # row 2 divider
-                 column(2), 
-                 
-
-                 # row 2 divider
-                 column(9,
-                        
-                        # adding gap
-                        div(class = "gap"),
-                        
-                        # adding divider line
-                        tags$hr(class = "divider"),
-                        
-                        # adding gap
-                        div(class = "gap"))
                
+               column(1) # right padding
+               
+             ),
+             # (Page 1) END row 1
+             
+             # (Page 1) START row 2 - divider line
+             fluidRow(
+               
+               column(1), # left padding
+               
+               # additional left padding
+               column(2), 
+               
+               
+               # column 3 divider line
+               column(9,
+                      
+                      # adding gap
+                      div(class = "gap"),
+                      
+                      # divider line
+                      tags$hr(class = "divider"),
+                      
+                      # adding gap
+                      div(class = "gap"))
+               
+             ),
+             # (Page 1) END row 2
+             
+             
+             # (Page 1) START row 3 - contributors
+             fluidRow(
+               
+               column(1), # left padding
+               
+               # row w column 2 - contributors
+               column(10,
+                      
+                      # title 
+                      tags$h4("Contributors:"),
+                      
+                      # adding gap
+                      div(class = "gap"),
+                      
+                      # Grace Wu bio
+                      tags$body(HTML("<b>Dr. Grace C. Wu</b> is an Assistant Professor in the Environmental Studies Program at UC Santa Barbara. Before joining UCSB, Grace was a Smith Conservation Fellow at The Nature Conservancy and the National Center for Ecological Analysis and Synthesis. She was also a UC President’s Postdoctoral Fellow at the John Muir Institute of the Environment at UC Davis. She was trained in systems thinking and interdisciplinary approaches in the Energy and Resources Group at UC Berkeley. Grace is interested in the dynamics and drivers of land use change, climate change mitigation, and advancing our ability to plan for sustainable, multi-use landscapes that protect biodiversity and advance climate goals. She uses spatial science approaches to identify and understand the co-benefits and trade-offs between climate solutions and habitat conservation. Her current main research areas are (1) sustainable spatial planning of low carbon energy systems; and (2) designing policy, management, and technology pathways to sustainable land systems.")),
+                      
+                      # adding gap
+                      div(class = "gap"),
+                      
+                      # capstone project description
+                      tags$body(HTML("<b>Michelle Lam, Colleen McCamy and Alessandra Vidal Meza </b> contributed to this project through their capstone project for the <a href='https://bren.ucsb.edu/masters-programs/master-environmental-data-science'>Master of Environmental Data Science</a> at the Bren School of Environmental Science & Management, UC Santa Barbara during the 2022-2023 school year. Capstone projects offer students the opportunity to collaboratively design, execute, and present a professional environmental data science product working with both internal and external stakeholders.")), 
+                      
+                      # adding gap
+                      div(class = "gap"),
+                      # adding another gap
+                      div(class = "gap")
+                      
                ),
-               # END row 2
-
-               
-               # START row 3
-               fluidRow(
-                 
-                 column(1), # left padding
-                 
-                 # row w column 2
-                 column(10,
-                        
-                        tags$h4("Contributors:"),
-                        
-                        # adding gap
-                        div(class = "gap"),
-                        
-                        tags$body(HTML("<b>Dr. Grace C. Wu</b> is an Assistant Professor in the Environmental Studies Program at UC Santa Barbara. Before joining UCSB, Grace was a Smith Conservation Fellow at The Nature Conservancy and the National Center for Ecological Analysis and Synthesis. She was also a UC President’s Postdoctoral Fellow at the John Muir Institute of the Environment at UC Davis. She was trained in systems thinking and interdisciplinary approaches in the Energy and Resources Group at UC Berkeley. Grace is interested in the dynamics and drivers of land use change, climate change mitigation, and advancing our ability to plan for sustainable, multi-use landscapes that protect biodiversity and advance climate goals. She uses spatial science approaches to identify and understand the co-benefits and trade-offs between climate solutions and habitat conservation. Her current main research areas are (1) sustainable spatial planning of low carbon energy systems; and (2) designing policy, management, and technology pathways to sustainable land systems.")),
-                        
-                        # adding gap
-                        div(class = "gap"),
-                        
-                        
-                        tags$body(HTML("<b>Michelle Lam, Colleen McCamy and Alessandra Vidal Meza </b> contributed to this project through their capstone project for the <a href='https://bren.ucsb.edu/masters-programs/master-environmental-data-science'>Master of Environmental Data Science</a> at the Bren School of Environmental Science & Management, UC Santa Barbara during the 2022-2023 school year. Capstone projects offer students the opportunity to collaboratively design, execute, and present a professional environmental data science product working with both internal and external stakeholders.")), 
-                        
-                        # adding gap
-                        div(class = "gap"),
-                        # adding gap
-                        div(class = "gap")
-                        
-                        ),
-
-                 
-                 column(1) # right padding
-                 
-               ),
-               # END row 3
                
                
-               # START row 2
-               fluidRow(
-                 
-                 # row 2 divider
-                 column(3),
-                 
-                 column(9,
-                        
-                        # adding gap
-                        div(class = "gap"),
-                        
-                        # adding divider line
-                        tags$hr(class = "divider"),
-                        
-                        # adding gap
-                        div(class = "gap")
-                        
-                        )
-                 
-               ),
-               # END row 2
+               column(1) # right padding
                
+             ),
+             # (Page 1) END row 3
+             
+             
+             # (Page 1) START row 2 
+             fluidRow(
                
-               # START row 4
-               fluidRow(
-                 
-                 # row 4 divider
-                 column(1),
-                 
-                 column(10,
-                        
-                        # adding gap
-                        div(class = "gap"),
-                        
-                        # acknowledgements
-                        tags$h4("Acknowledgements:"),
-                        
-                        # adding divider line
-                        tags$body("A special thank you to advisors and committee members: Dr. Naomi Tague, and Dr. Ruth Oliver, as well as Dr. Ranjit Deshmukh, Jamie Montgomery, Sam Csik,  Kat Le, and Brad Hill. This study builds on findings from the Power of Place study by The Nature Conservancy. A special thank you to Power of Place collaborators:  Joe Fargione, Nels Johnson, Christel Hiltibran, Chris Hise, and Liz Kalies, as well as consultants Ryan Jones from Evolved Energy Research and Emily Leslie form Montara Mountain Energy."),
-                        
-                        # adding gap
-                        div(class = "gap")
-                        
-                 )
-                 
-               ),
-               # END row 4
+               # row 2 divider
+               column(3),
                
-               
-               fluidRow(
-                 
-                 # row 4 divider
-                 column(1),
-                 
-                 column(10, 
-                        
-                        # adding gap
-                        div(class = "gap"),
-                        
-                        # github button
-                        div(
-                          style = "text-align: right;",
-                          a(
-                            href = "https://github.com/wattmaps",
-                            target = "_blank",
-                            actionButton(
-                              inputId = "button",
-                              label = span(
-                                class = "fa fa-github"
-                              )
-                            )
-                          )
-                        ),
-                        
-                        # adding gap
-                        #actionButton("button", "Github"),
-                        
-                        
- 
-                        # adding gap
-                        div(class = "gap"),
-                        ),
-                 
-                 column(1)
-                 
+               column(9,
+                      
+                      # adding gap
+                      div(class = "gap"),
+                      
+                      # adding divider line
+                      tags$hr(class = "divider"),
+                      
+                      # adding gap
+                      div(class = "gap")
+                      
                )
                
+             ),
+             # (Page 1) END row 2
+             
+             
+             # (Page 1) START row 4
+             fluidRow(
                
-             ), 
-             # END fluid page
-             
-             
-    ), # END (Page 1) home tabPanel
-    
-    ### --------------------
-    ### Page 2 Findings ---
-    ### --------------------
-    
-    # (Page 2) tabular data tabPanel
-    tabPanel(title =  "Findings",
-             
-             # START fluid page - data
-             fluidPage( 
+               # row 4 divider
+               column(1),
                
-               # START row 1 - graphs
-               fluidRow(
-                 
-                 column(1), # row 1 - right padding
-                 
-                 # START row 1 - column 1 graph1
-                 column(10,
-                        
-                        # title
-                        tags$h3("Findings & Results",
-                                style = "text-align: center;"),
-                        
-                        # adding gap
-                        div(class = "gap"),
-                        
-                        tags$body("This study reports four important findings of retrofitting existing wind projects with solar PV in the contiguous U.S.: (1) additional potential solar energy, (2) combined annual revenue and additional profit, (3) the optimal ratio of solar PV to wind, and (4) multi-criteria techno-economic analysis. This study reports findings for the subsample of 1,288 existing wind projects viable to be retrofitted with solar PV and defines viability as existing wind projects that have an estimated solar capacity greater than zero."),
-                        
-                        # adding gap
-                        div(class = "gap"),
-                        
-                        tags$body("Click on the different tabs below to explore the summary statistics and findings from the project."),
-                        # changing the tab color
-                        tags$style(HTML("
+               column(10,
+                      
+                      # adding gap
+                      div(class = "gap"),
+                      
+                      # acknowledgements
+                      tags$h4("Acknowledgements:"),
+                      
+                      # adding divider line
+                      tags$body("A special thank you to advisors and committee members: Dr. Naomi Tague, and Dr. Ruth Oliver, as well as Dr. Ranjit Deshmukh, Jamie Montgomery, Sam Csik,  Kat Le, and Brad Hill. This study builds on findings from the Power of Place study by The Nature Conservancy. A special thank you to Power of Place collaborators:  Joe Fargione, Nels Johnson, Christel Hiltibran, Chris Hise, and Liz Kalies, as well as consultants Ryan Jones from Evolved Energy Research and Emily Leslie form Montara Mountain Energy."),
+                      
+                      # adding gap
+                      div(class = "gap")
+                      
+               )
+               
+             ),
+             # (Page 1) END row 4
+             
+             
+             # (Page 1) START row 5
+             fluidRow(
+               
+               # row 4 divider
+               column(1),
+               
+               column(10, 
+                      
+                      # adding gap
+                      div(class = "gap"),
+                      
+                      # github button
+                      div(
+                        style = "text-align: right;",
+                        a(
+                          href = "https://github.com/wattmaps",
+                          target = "_blank",
+                          actionButton(
+                            inputId = "button",
+                            label = span(
+                              class = "fa fa-github"
+                            )
+                          )
+                        )
+                      ),
+                      
+                      # adding gap
+                      #actionButton("button", "Github"),
+                      
+                      
+                      
+                      # adding gap
+                      div(class = "gap"),
+               ),
+               
+               column(1)
+               
+             ) # (Page 1) END row 5
+             
+             
+           ), 
+           # (Page 1) END fluid page
+           
+           
+  ), # END (Page 1) home tabPanel
+  
+  ### --------------------
+  ### Page 2: Findings ---
+  ### --------------------
+  
+  # (Page 2) Findings
+  tabPanel(title =  "Findings",
+           
+           # (Page 2) START fluid page - findings
+           fluidPage( 
+             
+             # (Page 2) START row 1 - findings description
+             fluidRow(
+               
+               column(1), # row 1 - right padding
+               
+               # column 1 - findings descriptions
+               column(10,
+                      
+                      # title
+                      tags$h3("Findings & Results",
+                              style = "text-align: center;"),
+                      
+                      # adding gap
+                      div(class = "gap"),
+                      
+                      # findings description paragraph
+                      tags$body("This study reports four important findings of retrofitting existing wind projects with solar PV in the contiguous U.S.: (1) additional potential solar energy, (2) combined annual revenue and additional profit, (3) the optimal ratio of solar PV to wind, and (4) multi-criteria techno-economic analysis. This study reports findings for the subsample of 1,288 existing wind projects viable to be retrofitted with solar PV and defines viability as existing wind projects that have an estimated solar capacity greater than zero."),
+                      
+                      # adding gap
+                      div(class = "gap"),
+                      
+                      # instructions text
+                      tags$body("Click on the different tabs below to explore the summary statistics and findings from the project."),
+                      
+                      # HTML tag changing the tab color
+                      tags$style(HTML("
   .tabbable > .nav > li > a {
     background-color: #F5F9FA;
     color: #264653;
@@ -318,7 +330,7 @@ ui <- fluidPage(
 div(class = "gap"),
 
 
-# START tabsetPanel graph 1 ----
+# (Page 2) START finding tab1 total solar capacity ----
 tabsetPanel(
   type = "pills",
   
@@ -332,40 +344,42 @@ tabsetPanel(
            tags$hr(class = "divider"),
            
            fluidRow(
-             # START row 2 - wind solar complementary 
+             # (Page 2) START row 2 - total solar capacity
              column(12,
                     
                     # adding gap
                     div(class = "gap"),
                     
+                    # tab title
                     tags$h3("Total Solar Capacity for  Retrofitting Existing Wind Projects",
                             style = "text-align: center;"),
                     
+                    # total solar capacity finding description
                     tags$body("This study finds an estimated 115 GW of potential solar energy across all viable existing wind projects. This addition of potential solar energy represents the opportunity to nearly double capacity at existing wind projects while avoiding the development of new transmission infrastructure. Retrofitting existing wind projects with solar PV is also estimated to deliver over 11 billion USD in additional profit from solar energy production and 30 billion USD in annual combined revenue with wind energy production."),
                     
-
+                    
                     
                     # adding gap
                     div(class = "gap"))
              
            ),
-           # END row 2 - wind solar complementary
+           # (Page 2) END row 2 - wind solar complementary
            
-           # start row in capacity tabPanel
+           # (Page 2) start row in capacity tabPanel
            fluidRow(
              
-             # column within tabPanel
+             # column within tabPanel - 115GW image
              column(4, 
                     
-
-                    # total capacity graphic
+                    
+                    # (Page 2) total capacity graphic
                     tags$img(src = "images/total_solar_cpc.jpg", 
                              alt = "115 GW potential solar",
                              style = "max-width: 100%; overflow: hidden;"),
                     
              ),
              
-             # column 2 - by state plot
+             # (Page 2) column 2 - by state plot
              column(8, 
                     
                     # plot title and centering
@@ -375,7 +389,7 @@ tabsetPanel(
                     # adding gap
                     div(class = "gap"),
                     
-                    # plot avg ratio per state
+                    # map solar capacity per state
                     leafletOutput(outputId = "state_cap", 
                                   height = "350px")
                     
@@ -384,6 +398,7 @@ tabsetPanel(
              
            ),
            
+           # (Page 2) row 2 gap
            fluidRow(
              
              column(1),
@@ -401,75 +416,78 @@ tabsetPanel(
            )
            
            
-  ), # end tabsetPanel graph 1
+  ), # (Page 2) END tabsetPanel - total solar capacity
   
-  # start tabsetPanel graph 2 ----
-  tabPanel(title = "Solar to Wind Ratios for Retrofitting Existing Wind Projects",
+  # (Page 2) START tabsetPanel ratios ----
+  tabPanel(title = "Solar to Wind Ratios",
            
            # adding divider line
            tags$hr(class = "divider"),
            
+           # (Page 2) START row 1 - title & description
            fluidRow(
              
-
+             # (Page 2) column 1
              column(12, 
                     
                     # adding gap
                     div(class = "gap"),
                     
-                    tags$h3("Solar to Wind Ratios",
+                    # finding option title
+                    tags$h3("Solar to Wind Ratios for Retrofitting Existing Wind Projects",
                             style = "text-align: center;"),
                     
                     # adding gap
                     div(class = "gap"),
                     
+                    # description of solar to wind ratios
                     tags$body("This study identifies an average optimal ratio of solar PV to wind of 1.01 for all viable existing wind projects, ceteris paribus. The optimal ratio suggests that, on average, for every 1.00 unit of wind capacity, 1.01 units of solar capacity may be added to the project to maximize profit, ceteris paribus. While the distribution of optimal ratios ranges from zero to 1.50, most existing wind projects have a ratio of solar PV to wind greater than 0.70. We thus can point to co-location of solar PV and wind at viable existing wind projects may be a ‘low-hanging fruit’ pathway towards reaching clean electricity goals in the U.S."),
                     
                     # adding gap
                     div(class = "gap")
                     
-                    
-                    ),
-             
+             ),
              
            ),
            
+           # (Page 2) start findings row
            fluidRow(
              
-             # start column 1 ratio
+             # start column 1 ratio overview
              column(5, 
                     
                     
-                    # average ratio graphic
+                    # average ratio findings graphic
                     tags$img(src = "images/avg_ratio_graphic.jpg", 
                              alt = "1.01 solar to 1 wind",
                              style = "max-width: 100%; overflow: hidden;"),
                     
+                    # graphic description
                     tags$h5("Average solar to wind ratio for viable sites"),
                     
+                    # additional graphic description
                     tags$h6("*Caclulated for sites with a solar capacity greater than 0 GW")
                     
-             ), # end column 1 ratio
+             ), # END column 1 average ratio
              
-             # start column 2 ratio
+             # START column 2 ratio - graph
              column(7, 
                     
-                    # plot title and centering
+                    # map title and centering
                     tags$h4("Distribution of ratios Across All Viable Wind Projects in the US", 
                             style = "text-align: center;"),
                     
-                    # calling the distribution
+                    # graph of ratio histogram
                     plotOutput("ratio_distribution"),
                     
-                    
-                    
-             ) # column 2 ratio
+             ) # END column 2 ratio by state map
              
            ), # end of fluid Row
            
+           # (Page 2) row 3 - average ratio by state map
            fluidRow(
              
-
+             # full width column - map of state ratios
              column(12, 
                     
                     # adding gap
@@ -485,22 +503,22 @@ tabsetPanel(
                     # plot avg ratio per state
                     leafletOutput(outputId = "state_ratio", 
                                   height = "350px")
-                    )
+             )
              
            )
            
-  ), # end tabsetPanel graph 2
+  ), # end tabsetPanel ratios
   
-  # start tabsetPanel 3 ----
+  # start tabsetPanel 3 ---- solar & wind complementarity
   tabPanel(title = "Solar & Wind Complementarity",
            
            # adding divider line
            tags$hr(class = "divider"),
            
-           # start fluidRow 1
+           # (Page 2) START row 1 - title & description
            fluidRow(
              
-             # start timeseries column
+             # START title, description & plot
              column(12,
                     
                     tags$h4("Wind and Solar Complementarity Capacity Factors Example",
@@ -508,19 +526,21 @@ tabsetPanel(
                     # adding gap
                     div(class = "gap"),
                     
+                    # description of graph
                     tags$body("This graph showcases wind and solar capacity factors for 2012 for Neosho Ridge wind project in Neosho County, Kansas. The ratio for solar to wind is 1.17 with an estimated annual solar capacity of 357 MW and wind capacity of 305 MW. Change the day of the year with the slide option below."),
                     # adding gap
                     div(class = "gap"),
+                    
                     # calling the distribution
                     plotOutput("cp_time_series")
                     
              ), # end timeseries column
              
-
              
-           ), # end of fluid Row 1
+             
+           ), # (Page 2) END of fluid Row 1
            
-           # start fluidRow 2
+           # (Page 2) START row 2 - slider plot inputs
            fluidRow(
              
              column(1), # left padding
@@ -542,7 +562,7 @@ tabsetPanel(
                     
              ), # end slider column
              
-             # start text column
+             # column 4 for legend (static image)
              column(5, 
                     # adding gap
                     div(class = "gap"),
@@ -551,74 +571,76 @@ tabsetPanel(
                     tags$img(src = "images/solar_wind_complementarity_legend.jpg", 
                              alt = "yellow solar, blue wind",
                              style = "max-width: 60%; overflow: hidden;"),
-
+                    
              ), # end text column
              
              column(1) # right padding
              
              
-           ), # end of fluid Row 2
+           ), # (Page 2) END of fluid Row 2 - legend & slider
            
-           # start fluid row 3 - graph description
+           # (Page 2) START fluid row 3 - adding gap
            fluidRow(
              
              # adding gap
              div(class = "gap"),
              
              
-            
-             ) # end fluid row 3 - graph description
+             
+           ) # (Page 2) END fluid row 3 - gap
            
-  ), # end tabsetPanel 3
+  ), # (Page 2) end tabsetPanel 3 - complementarity
   
   
-  # start tabsetPanel 4 ----
+  # (Page 2) start tabsetPanel 4 ---- economic development
   tabPanel(title = "Economic Development",
            
            # adding divider line
            tags$hr(class = "divider"),
            
-           # start fluidRow 1
+           # (Page 2) START fluidRow 1 - federal incentives
            fluidRow(
              
-             # start IRA column
+             # START federal incentives column full width 
              column(12,
                     
+                    # title for IRA section
                     tags$h3("Potential Federal IRA Tax Incentive Eligibility for Adding Solar PV", 
                             style = "text-align: center;"),
                     
                     # adding gap
                     div(class = "gap"),
                     
-                   tags$body("TThe Inflation Reduction Act defines energy communities as  brownfield sites, coal communities and areas with a specific combination of employment and local tax revenue related to the fossil fuel industry. This study finds that around 12 percent of viable existing wind projects are sited within counties with IRA energy communities. This suggests that around 12 percent of viable existing wind projects may receive a 10 percent increase in federal tax benefits. 
+                    # IRA description 
+                    tags$body("TThe Inflation Reduction Act defines energy communities as  brownfield sites, coal communities and areas with a specific combination of employment and local tax revenue related to the fossil fuel industry. This study finds that around 12 percent of viable existing wind projects are sited within counties with IRA energy communities. This suggests that around 12 percent of viable existing wind projects may receive a 10 percent increase in federal tax benefits. 
                              
                              However, viable existing wind projects in energy communities also operate, on average, at near 76 percent staffing and resource capacity (The Rural Capacity Index). The local governments of where these projects are sited may not have the staffing and resources to access these federal tax benefits."),
-                   
-                   # adding gap
-                   div(class = "gap"),
+                    
+                    # adding gap
+                    div(class = "gap"),
                     
                     
-             ) # end IRA column
+             ) # (Page 2) END federal incentives
              
              
-           ), # end of fluid Row 1
+           ), # (Page 2) END IRA row
            
-           # start fluidRow 2
+           # (Page 2) START row 2 - graphs
            fluidRow(
              
              column(1), # left padding
              
-             # start slider column
+             # START column 1 solar capacity IRA by census track
              column(5,
                     
                     tags$h4("Solar Capacity for Sites that Fall in\n Counties with Eligible Census Tracts by State",
-                             style = "text-align: center;"),
+                            style = "text-align: center;"),
                     
                     plotOutput("energy_comm_solar_cap")
                     
-             ), # end slider column
+             ), # END column 1 solar capacity IRA by census track
              
-             # start text column
+             # START column 2 rural capacity ridge
              column(5, 
                     
                     tags$h4("Rural Capacity Index Distribution by Region", 
@@ -634,6 +656,7 @@ tabsetPanel(
              
            ), # end of fluid Row 2
            
+           # (Page 2) START row 2 - equitable investment
            fluidRow(
              
              # adding gap
@@ -642,7 +665,7 @@ tabsetPanel(
              # adding gap
              div(class = "gap"),
              
-             # adding divider line
+             # adding blue dotted divider line
              tags$hr(class = "divider-main"),
              
              # adding gap
@@ -651,88 +674,74 @@ tabsetPanel(
              # adding gap
              div(class = "gap"),
              
+             # section title
              tags$h3("Equitable Investment for Retrofitting Existing Wind Projects", 
-                            style = "text-align: center;"),
+                     style = "text-align: center;"),
              
              # adding gap
              div(class = "gap"),
              
+             # equitable investment description
              tags$body("TThe study evaluated equitable investment in renewable energy deployment since renewable energy deployment tends to be lower in communities that require economic development and employment opportunities the most. The DOE uses fossil dependence, energy burden, environmental and climate hazard, and sociodemographic data at the census tract-level to assess for Disadvantaged Community status. This study finds that less than 3 percent of viable existing wind projects are within counties with Disadvantaged Community status. This percentage of viable existing wind projects is low likely due to the rural-urban and racial disparities of past siting that hinders equitable investment in the case of retrofitting (Ross et al., 2022).")
              
-           ) # start of fluid Row 3
+           ) # end of economic development column
            
-  ), # end tabsetPanel 4
+  ), # (Page 2) END economic development tabset
   
-  # start tabsetPanel 5 ----
+  # (Page 2) START - Environmental Impact tabset
   tabPanel(title = "Environmental Impact",
            
            # adding divider line
            tags$hr(class = "divider"),
            
-           # start fluidRow 1
+           # (Page 2) START fluidRow 1 - title and description
            fluidRow(
              
-             
-             
-             # start env. results column
+             # START env. impact title, description & plot full width column
              column(12,
                     
+                    # env. impact title
                     tags$h3("Environmental Impact Scores for Solar PV Deployment",
                             style = "text-align: center;"),
                     
                     # adding gap
                     div(class = "gap"),
                     
+                    # environmental impact description
                     tags$body("This study couples these nonlinear optimization model findings with a multi-criteria techno-economic analysis for environmental impact*. Overall, there is an average environmental impact score of 7.80 across all viable existing wind projects and a weighted average environmental impact score of 6.61 by potential solar capacity. These estimates suggest that retrofitting viable existing wind projects with solar PV has minimal direct environmental impact and may make use of environmental and physical sunk costs already incurred by projects, like fencing, auxiliary, roads infrastructure, and transmission infrastructure."),
                     
                     # adding gap
                     div(class = "gap"),
                     
+                    # plot description
                     tags$body("The plot below outlines the distribution of environmental impact scores by region."),
                     
                     # adding gap
                     div(class = "gap"),
                     
+                    # environmental impact by region plot
                     plotOutput("env_score_ridge"),
                     
+                    # environmnetal impact score description
                     tags$h6("*This study used environmental impact scores from the Power of Place study by The Nature Conservancy to evaluate the environmental sensitivity of solar PV deployment within existing wind projects. The scores are high-level estimates of spatially-specific environmental positives and negatives, where larger raster values indicate higher negative impacts, lower raster values indicate lower negative impacts. The environmental impact index consists of data falling into the following categories:  wetland, managed areas, threatened and endangered species habitat, intact habitat, and local bird and bat habitats.")
                     
-             ) # end env. results column
+             ) # END env. results column
              
              
-           ), # end of fluid Row 1
+           ), # (Page 2) END of fluid Row 1
            
-           # start fluidRow 2
-           fluidRow(
-             
-             column(1), # left padding
-             
-             # start slider column
-             column(5
-             ), # end slider column
-             
-             # start text column
-             column(5, 
-                   
-                    
-             ), # end text column
-             
-             column(1) # right padding
-             
-             
-           ) # end of fluid Row 1
            
-  ), # end tabsetPanel 5
+  ), # (Page 2) END - environmental impact tabsetPanel
   
-  
-), # END tabsetPanel
+), # (Page 2) END tabsetPanels for all findings
 
+# (Page 2) START row 2 - github button
 fluidRow(
   
   # adding gap
   div(class = "gap"),
   
-  # github button
+  # adding github button
   div(
     style = "text-align: right;",
     a(
@@ -741,44 +750,24 @@ fluidRow(
       actionButton(
         inputId = "button",
         label = span(
-          class = "fa fa-github"
-        )
-      )
-    )
-  ),
+          class = "fa fa-github")))),
   
-)
+)), # END (Page 2) total page
 
-                 ), # END (Page 2) data viz tabPanel
+# (Page 2) Custom spacing
+column(1) ), 
 
-column(1) # row 1 - right padding
-               ),
-# ENDS ROW 1
-
-# START row 2 - Map text 
 fluidRow(
   
-  # START row 2 - column 1 padding
   column(1,
   ),
-  # ENDS row 2 - column 1 - padding
-  
-  # START row 2 - column 2 - map text
   column(10, 
          
          # adding gap
          div(class = "gap"),
          # adding gap
          div(class = "gap"),
-  ),
-  # END row 2  - column 2 - map text
-  
-  # START row 2 - column 3 padding
-  column(1),
-  # ENDS row 2 - column 1 - padding
-  
-  
-),
+  ), column(1),),
 
 # END row 2 - map text 
 
@@ -788,46 +777,34 @@ fluidRow(
          
          # adding gap
          div(class = "gap"),
-        
          
          # adding gap
-         div(class = "gap"),
-         
-  )
-  
-),
-# END row 2 - divider
-
-
-
-             ),
-# END fluid page
-
-
-    ), # END (Page 2) tabular data 
+         div(class = "gap"),)),),), # END (Page 2) ALL
 
 
 ### --------------------
-### Page 4 Map ---------
+### Page 3 Map ---------
 ### --------------------
 
-# (Page 4) data viz tabPanel
+# (Page 3) START Nav panel - explore the map 
 tabPanel(title =  "Explore the Map",
          
-         # START fluid page - map
+         # (Page 3) START fluid page - map
          fluidPage( 
-           # START row 1 - map
+           
+           # (Page 3) START row 1 - map
            fluidRow(
              
              column(1), # column 1 - left padding
              
-             # START row 1 - column 2 - map
+             # START row 1 - column 2 - map title and description
              column(10, 
                     
-                    # REPLACE
+                    # map title
                     tags$h3("Map of Existing Wind Projects for Potential Solar PV Retrofit", 
                             style = "text-align: center;"),
                     
+                    # map description
                     tags$body("Click on the icons to see project details and potential capacity and filter by state, solar capacity and more with the options below the map. The following map outlines the results of the  nonlinear optimization model solving for the optimal solar PV to wind technology ratio at each existing wind project that maximizes the annual profit subject to the estimated generation, annual costs, and transmission line capacity of each viable project. The pop-up information showcases the optimization result for each existing wind project."),
                 
                     # adding gap
@@ -840,29 +817,25 @@ tabPanel(title =  "Explore the Map",
            ),
            # END row 1
            
-           # START row 2 - Map text 
+           # (Page 3) START row 2 - Map 
            fluidRow(
              
              column(1), # column 1 - left padding
              
-             # START row 2 - column 2 - map text
+             # START column 2 - map
              column(10, 
                     
-                    # adding the leaflet output
-
-                    
-                    
-                    leafletOutput(outputId = "test_map", 
+                    # adding the leaflet map of all sites
+                    leafletOutput(outputId = "colocation_map", 
                                   height = "560px")
-             ),
-             # END row 2 - column 2 - map text
+             ), # END column 2 map
              
              column(1), # column 3 - right padding
              
            ),
-           # END row 2 - map text 
+           # (Page 3) END row 2 - co-location map
            
-           # START row 3 - Filter title
+           # (Page 3) START row 3 - map filtering title
            fluidRow(
              
              column(1), # column 1 - left padding
@@ -873,30 +846,29 @@ tabPanel(title =  "Explore the Map",
                     # adding gap
                     div(class = "gap"),
                     
+                    # filter map title
                     tags$h4("Map Filtering Options",
                             style = "text-align: center;"),
                     
                     # adding gap
                     div(class = "gap"),
                     
-             ),
-             # END row 3 - column 2 - select states
+             ),#  end column 2 - filtering title
              
              column(1), # column 3 - right padding
              
            ),
-           # END row 2 - map text 
+           # (Page 3) END row 2 - filtering options title
            
-           # START row 3 - Map text 
+           # (Page 3) START row 3 - filter options
            fluidRow(
              
              column(1), # column 1 - left padding
              
-             # START row 3 - column 2 - select states
+             # column 2 - select states dropdown
              column(3, 
                     
-                    # state picker
-                    
+                    # state picker options
                     pickerInput(
                       inputId = "state_input", 
                       label = "Select states:", 
@@ -905,17 +877,12 @@ tabPanel(title =  "Explore the Map",
                       options = pickerOptions(
                         actionsBox = TRUE, 
                         size = 10,
-                        selectedTextFormat = "count > 3",
-                        
-                      ), 
-                      multiple = TRUE
-                    ), # end state picker
-                    
-                    
-             ),
+                        selectedTextFormat = "count > 3"),
+                      multiple = TRUE), # end state picker
+                    ),
              # END row 3 - column 2 - select states
              
-             # START row 3 - column 3 - slider
+             # START row 3 - column 3 - solar capacity slider
              column(4, 
                     
                     # start solar cap. slider
@@ -950,9 +917,9 @@ tabPanel(title =  "Explore the Map",
              column(1), # column 3 - right padding
              
            ),
-           # END row 2 - map text 
+           # (Page 3) END row 3 - filtering options 
            
-           # github button row
+           # (Page 3) START row 4 github button 
            fluidRow(
              
              # adding gap
@@ -967,35 +934,30 @@ tabPanel(title =  "Explore the Map",
                  actionButton(
                    inputId = "button",
                    label = span(
-                     class = "fa fa-github"
-                   )
-                 )
-               )
-             ),
+                     class = "fa fa-github")))),
              
              # adding gap
              div(class = "gap"),
              
              # adding gap
              div(class = "gap")
-             
-           )
+             ) # (Page 3) END row 4 github button 
            
-         ) # END fluid page - maps
+         ) # (Page 3) END fluid page - map
          
-), # END (Page 4) data viz tabsetPanel
+), # END (Page 3) explore the map
 
 ### --------------------
-### Page 5 Data ---------
+### Page 4 Data ---------
 ### --------------------
 
-# (Page 5) tabular data tabPanel
+# (Page 4) tabular data tabPanel
 tabPanel(title =  "Explore the Data",
          
-         # START fluid page - data
+         # (Page 4) START fluid page - explore the data
          fluidPage( 
            
-           # start row 1 - header and text 
+           # (Page 4) start row 1 - title and description 
            fluidRow(
              column(1), #left padding
              
@@ -1012,7 +974,7 @@ tabPanel(title =  "Explore the Data",
                     # adding gap
                     div(class = "gap"),
                     
-                    # page description
+                    # data description
                     tags$body("Available data includes: energy attributes containing the optimization results of energy capacity, solar ratios and monetary estimates; techno-economic attributes with information whether the projects fall within different techno-economic criteria and envrionmental impact scores; transmission attributes showcasing information about nearby transmission infastructure; location attributions containing latitude and longitude; all data combined and metadata."),
                     
                     # adding gap
@@ -1022,17 +984,19 @@ tabPanel(title =  "Explore the Data",
              
              column(1) #right padding
              
-           ),# end row 1 - header and text 
+           ),# (Page 4) end row 1 - title and description
            
-           # START row 2 - Map text 
+           # (Page 4) START row 2 - Data picker and inputs
            fluidRow(
              
              # START row 2 - column 1 padding
              column(1),
              # ENDS row 2 - column 1 - padding
              
-             # START row 2 - column 2 - download button
+             # START row 2 - column 2 - select dataset & download button
              column(2, 
+                    
+                    # data selection input
                     selectInput("dataset", "Choose a dataset:",
                                 choices = c("energy attributes", 
                                             "techno-economic attributes",
@@ -1041,7 +1005,7 @@ tabPanel(title =  "Explore the Data",
                                             "all data",
                                             "metadata")),
                     
-                    # Button
+                    # button to download data
                     downloadButton("downloadData", "Download"),
                     
                     # adding gap
@@ -1052,10 +1016,10 @@ tabPanel(title =  "Explore the Data",
              # END row 2  - column 2 - download button
              
              
-             # START row 2 - column 3 - data table
+             # START row 2 - column 3 - data tables
              column(8, 
                     
-                    # download data tables
+                    # data table output
                     dataTableOutput("table")
              ),
              # END row 2  - column 3 - data table
@@ -1067,9 +1031,9 @@ tabPanel(title =  "Explore the Data",
              
              
            ),
-           # END row 2 - map text 
+           # (Page 4) END row 2 - data table and download
            
-           # github button row
+           # (Page 4) adding github button row
            fluidRow(
              
              # adding gap
@@ -1084,26 +1048,19 @@ tabPanel(title =  "Explore the Data",
                  actionButton(
                    inputId = "button",
                    label = span(
-                     class = "fa fa-github"
-                   )
-                 )
-               )
-             ),
+                     class = "fa fa-github")))),
              
              # adding gap
              div(class = "gap"), 
              
              # adding gap
-             div(class = "gap")
-             
-           )
+             div(class = "gap")) # END gitbub button row
            
-         ),
-         # END fluid page
+           ),
+         # (Page 4) END fluid page - data tables
          
          
-), # END (Page 5) tabular data 
-
+), # END (Page 4) explore the data
 
 
 
@@ -1111,12 +1068,13 @@ tabPanel(title =  "Explore the Data",
 ### Page 5 Methods & Assumptions
 ### --------------------
 
-# (Page 2) how to tabPanel
+# (Page 5) START page 5 methods & assumptions
 tabPanel(title = "Methods & Sources",
-         # START fluid page - about
+         
+         # START fluid page - methds
          fluidPage( 
            
-           # START row 1 - how to
+           # START row 1 - methods description
            fluidRow(
              
              column(1), # row 1 - left padding
@@ -1139,9 +1097,9 @@ tabPanel(title = "Methods & Sources",
              column(1) # row 1 - right padding
              
            ),
-           # END row 1 - how to
+           # (Page 5) END row 1 - methods description
            
-           # START row 2 - data & terms
+           # (Page 5) START row 2 - data table
            fluidRow(
              
              column(1), # row 1 - left padding
@@ -1164,15 +1122,14 @@ tabPanel(title = "Methods & Sources",
                     # Add the divider line
                     tags$hr(class = "divider"),
                     
-                    ),
-             # END row 1 - column 3
+                    ), # END data table column
              
              column(1), # row 1 - left padding
              
            ),
-           # END row 2 - data & terms
+           # (Page 5) END row 2 - data table
            
-           # START row 3 - methods & assumptions
+           # (Page 5) START row 3 - ssumptions
            fluidRow(
              
              column(1), # right padding
@@ -1186,6 +1143,7 @@ tabPanel(title = "Methods & Sources",
                     # assumptions text
                     includeMarkdown("text/assumptions.md"),
                     
+                    # assumptions table image
                     tags$img(src = "images/optimization_assumptions.jpg", 
                              alt = "wind and solar",
                              style = "max-width: 90%;  overflow: hidden; padding-top: 16px;") 
@@ -1196,15 +1154,15 @@ tabPanel(title = "Methods & Sources",
              column(1) # right padding
              
            ),
-           # end row 3 - methods & assumptions
+           # (Page 5) END row 3 - assumptions
            
-           # github button row
+           # (Page 5) START row - add github button 
            fluidRow(
              
              # adding gap
              div(class = "gap"),
              
-             # github button
+             # adding github button
              div(
                style = "text-align: right;",
                a(
@@ -1213,20 +1171,16 @@ tabPanel(title = "Methods & Sources",
                  actionButton(
                    inputId = "button",
                    label = span(
-                     class = "fa fa-github"
-                   )
-                 )
-               )
-             ),
+                     class = "fa fa-github")))),
              
              # adding gap
              div(class = "gap")
              
            )
            
-         ) # END fluid page - about
+         ) # (Page 5) END fluid page - methods & assumptions
          
-), # END (Page 2) how to tabPanel
+), # END (Page 5) how to tabPanel
 
 ### --------------------
 ### END Navbar Page ----

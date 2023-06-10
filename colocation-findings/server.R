@@ -1,109 +1,6 @@
 # server instructions ----
 server <- function(input, output) {
   
-  ### -------------
-  # Explore the Map 
-  # ---------------
-  
-  # setting input for filtering the map data
-  map_filter_df <- reactive({
-    map_data |>
-      filter(state_names %in% c(input$state_input)) |> 
-      filter(slr_cpc >= input$slr_input[1] & 
-               slr_cpc <= input$slr_input[2]) |> 
-      filter(en_comm %in% c(input$en_comm_input)) #|> 
-    # filter(en_bur %in% c(input$en_bur_input))
-  })
-  
-  # sourcing the map script file
-  #source("maps/test_map.R")
-  
-  icons <- awesomeIcons(
-    icon = 'map-marker-alt',
-    iconColor = '#F5F9FA',
-    library = 'ion',
-    markerColor = "orange"
-  )
-  
-  # Call the function that creates the map
-  output$test_map <- renderLeaflet({
-    popup_content <- paste(
-      "<div line-height: 1.7;'>",
-      
-      "<span style='color: #787d87;'> <b>Project:</b> ", 
-      map_filter_df()$p_name,
-      "</span><br>",
-      
-      "<span style='color: #787d87;'> <b>Location:</b> ", 
-      map_filter_df()$county, ",", 
-      map_filter_df()$state_names, 
-      "</span><br>",
-      
-      "<span style='color: #787d87;'><b>Environmental Sensitivity Score:</b> ", 
-      map_filter_df()$env_sens_score, 
-      "</span><br>",
-      
-      "<span style='color: #264653;'><b>Solar Capacity:</b> ", 
-      round(map_filter_df()$slr_cpc), 
-      " MW</span><br>",
-      
-      "<span style='color: #264653;'><b>Annual Revenue:</b> $", 
-      format(round(map_filter_df()$revenue), big.mark = ","), 
-      "</span><br>",
-      
-      "<span style='color: #264653;'><b>Solar to Wind Ratio:</b> ", 
-      round(map_filter_df()$slr_wn, 2), 
-      "</span><br>",
-      
-      "</div>"
-    )
-    
-    
-    # mapping the data with leaflet
-    test_map <- leaflet() |> 
-      addProviderTiles(providers$CartoDB.Positron) |> 
-      addAwesomeMarkers(map_filter_df(), 
-                        lng = map_filter_df()$lon, 
-                        lat = map_filter_df()$lat,
-                        icon = icons,
-                        popup = popup_content)
-  })
-  
-  ### -------------
-  # Tabular Data
-  # ---------------
-  
-  # Reactive value for selected dataset ----
-  datasetInput <- reactive({
-    switch(input$dataset,
-           "energy attributes" = energy_data,
-           "techno-economic attributes" = techno_data,
-           "transmission attributes" = transmission_data,
-           "location attributes" = location_data,
-           "all data" = map_data,
-           "metadata" = metadata)
-  })
-  
-  # Table of selected dataset ----
-  output$table <- renderDataTable({
-    datasetInput()
-  })
-  
-  
-  # Downloadable csv of selected dataset ----
-  output$downloadData <- downloadHandler(
-    filename = function() {
-      paste(input$dataset, ".csv", sep = "")
-    },
-    content = function(file) {
-      write.csv(datasetInput(), file, row.names = FALSE)
-    }
-  )
-  
-  
-  # automatically stopping the app when browser is closed
-  #session$onSessionEnded(stopApp)
-  
   
   ### -------------
   # Findings Tab
@@ -208,7 +105,7 @@ server <- function(input, output) {
       filter(as.numeric(day_year) == input$hour_input) 
   })
   
-  # timeseries capacity factor map
+  # timeseries capacity factor plot
   output$cp_time_series <- renderPlot({
     pid_1316_gen_df() |> 
       ggplot() +
@@ -237,20 +134,6 @@ server <- function(input, output) {
     
   })
   
-  ### -------------
-  # Methods & Sources
-  # ---------------
-  
-  data_description <- read_csv("data/data_descrip.csv")
-  
-  output$data_description <- renderDataTable({
-    data_description
-  })
-  
-  
-  ### -------------
-  # Techno-Economic Plots
-  # ---------------
   
   # environmental score ridge plot
   output$env_score_ridge <- renderPlot({
@@ -277,26 +160,26 @@ server <- function(input, output) {
   
   
   # RCI of Energy Community PIDs by State
- output$rci_plot <- renderPlot({
-  rci_plot_data |>   
-    ggplot(aes(x = rci, y = region, fill = region)) +
-    geom_density_ridges(alpha = 0.9) +
-    scale_x_continuous(breaks = seq(0, 100, 25)) +
-    scale_discrete_manual(values = region_colors, 
-                          aesthetics = 'fill') +
-    labs(x = "Rural Capacity Index",
-         y = NULL, 
-         fill = NULL) +
-    theme_ridges() +
-    theme(plot.title = element_text(hjust = 0.5),
-          panel.background = element_rect(fill = "#F5F9FA" , 
-                                          color = "#264653"),
-          plot.background = element_rect(fill = "#F5F9FA",
-                                         color = NA),
-          axis.title.x = element_text(hjust = 0.5)) +
-    guides(fill = "none")  # Remove the fill legend
-})
-
+  output$rci_plot <- renderPlot({
+    rci_plot_data |>   
+      ggplot(aes(x = rci, y = region, fill = region)) +
+      geom_density_ridges(alpha = 0.9) +
+      scale_x_continuous(breaks = seq(0, 100, 25)) +
+      scale_discrete_manual(values = region_colors, 
+                            aesthetics = 'fill') +
+      labs(x = "Rural Capacity Index",
+           y = NULL, 
+           fill = NULL) +
+      theme_ridges() +
+      theme(plot.title = element_text(hjust = 0.5),
+            panel.background = element_rect(fill = "#F5F9FA" , 
+                                            color = "#264653"),
+            plot.background = element_rect(fill = "#F5F9FA",
+                                           color = NA),
+            axis.title.x = element_text(hjust = 0.5)) +
+      guides(fill = "none")  # Remove the fill legend
+  })
+  
   
   
   
@@ -352,8 +235,9 @@ server <- function(input, output) {
     )
     
     # Create the Leaflet plot with continuous fill
-    leaflet() %>%
-      addProviderTiles(providers$CartoDB.Positron) %>%
+    leaflet() |> 
+      addProviderTiles(providers$CartoDB.Positron) |> 
+      addProviderTiles(providers$Esri.WorldImagery) |> 
       addPolygons(
         data = us_states_regions,
         fillColor = ~color_palette(avg_slr_wn),  # Fill polygons based on ratio using color_palette
@@ -388,7 +272,7 @@ server <- function(input, output) {
       
       "</div>"
     )
-
+    
     # Create a color palette for the continuous fill
     color_palette <- colorNumeric(
       palette = "Oranges",  # Choose a color palette (e.g., "Blues")
@@ -418,8 +302,122 @@ server <- function(input, output) {
   })
   
   
-
+  ### -------------
+  # Explore the Map 
+  # ---------------
   
+  # setting input for filtering the map data
+  map_filter_df <- reactive({
+    map_data |>
+      filter(state_names %in% c(input$state_input)) |> 
+      filter(slr_cpc >= input$slr_input[1] & 
+               slr_cpc <= input$slr_input[2]) |> 
+      filter(en_comm %in% c(input$en_comm_input))
+  })
+  
+  
+  icons <- awesomeIcons(
+    icon = 'map-marker-alt',
+    iconColor = '#F5F9FA',
+    library = 'ion',
+    markerColor = "orange"
+  )
+  
+  # creating leaflet map
+  # Call the function that creates the map
+  output$colocation_map <- renderLeaflet({
+    popup_content <- paste(
+      "<div line-height: 1.7;'>",
+      
+      "<span style='color: #787d87;'> <b>Project:</b> ", 
+      map_filter_df()$p_name,
+      "</span><br>",
+      
+      "<span style='color: #787d87;'> <b>Location:</b> ", 
+      map_filter_df()$county, ",", 
+      map_filter_df()$state_names, 
+      "</span><br>",
+      
+      "<span style='color: #787d87;'><b>Environmental Sensitivity Score:</b> ", 
+      map_filter_df()$env_sens_score, 
+      "</span><br>",
+      
+      "<span style='color: #264653;'><b>Solar Capacity:</b> ", 
+      round(map_filter_df()$slr_cpc), 
+      " MW</span><br>",
+      
+      "<span style='color: #264653;'><b>Annual Revenue:</b> $", 
+      format(round(map_filter_df()$revenue), big.mark = ","), 
+      "</span><br>",
+      
+      "<span style='color: #264653;'><b>Solar to Wind Ratio:</b> ", 
+      round(map_filter_df()$slr_wn, 2), 
+      "</span><br>",
+      
+      "</div>"
+    )
+    
+    # Create the Leaflet map
+    colocation_map <- leaflet() |> 
+      addProviderTiles(providers$Esri.WorldImagery, group = "Satelite Imagery") |> 
+      addProviderTiles(providers$CartoDB.Positron, group = "State Map") |> 
+      addAwesomeMarkers(
+        data = map_filter_df(),
+        lng = ~lon,
+        lat = ~lat,
+        icon = icons,
+        popup = popup_content
+      ) |> 
+      addLayersControl(
+        baseGroups = c("Satelite Imagery", "State Map"),
+        options = layersControlOptions(collapsed = FALSE)
+      )
+  })
+  
+  ### -------------
+  # Tabular Data
+  # ---------------
+  
+  # Reactive value for selected dataset ----
+  datasetInput <- reactive({
+    switch(input$dataset,
+           "energy attributes" = energy_data,
+           "techno-economic attributes" = techno_data,
+           "transmission attributes" = transmission_data,
+           "location attributes" = location_data,
+           "all data" = map_data,
+           "metadata" = metadata)
+  })
+  
+  # Table of selected dataset ----
+  output$table <- renderDataTable({
+    datasetInput()
+  })
+  
+  
+  # Downloadable csv of selected dataset ----
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste(input$dataset, ".csv", sep = "")
+    },
+    content = function(file) {
+      write.csv(datasetInput(), file, row.names = FALSE)
+    }
+  )
+  
+  
+  ### -------------
+  # Methods & Sources
+  # ---------------
+  
+  # data description table
+  data_description <- read_csv("data/data_descrip.csv")
+  
+  # data description table output
+  output$data_description <- renderDataTable({
+    data_description
+  })
+
 }
 
 
