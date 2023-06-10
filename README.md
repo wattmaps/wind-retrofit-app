@@ -1,4 +1,4 @@
-# Wind Retrofit App - Co-location Findings Shiny Dashboard
+# Wind Retrofit App - Co-location Findings Shiny App
 
 ### Application Structure & Content
 
